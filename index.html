@@ -1,0 +1,4122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homework 1</title>
+    <style>
+
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f0f8ff;
+      }
+      h1, h2, h3 { color: #2c3e50; }
+      p.subtitle { color: #555; }
+      .interactive-demo {
+        background-color: #e0f7fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 30px;
+      }
+      button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        margin: 5px 5px 5px 0;
+      }
+      button:hover { background-color: #2980b9; }
+      button:disabled { background-color: #95a5a6; cursor: default; }
+      button:disabled:hover { background-color: #95a5a6; }
+      .hidden { display: none; }
+      .math-formula {
+        font-family: "Times New Roman", Times, serif;
+        font-style: italic;
+        background-color: #f9f9f9;
+        padding: 5px;
+        border-radius: 5px;
+      }
+      .vector-display p { font-size: 18px; font-weight: bold; }
+      .question-section { margin-top: 15px; font-size: 18px; }
+      .feedback { margin-top: 10px; font-size: 17px; font-weight: bold; }
+      .feedback.correct { color: #1e8449; }
+      .feedback.incorrect { color: #c0392b; }
+      .calculation-steps {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+      }
+      .step {
+        margin-bottom: 10px;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 17px;
+      }
+      .result-display { font-size: 19px; font-weight: bold; margin-top: 15px; color: #1565c0; }
+      .quiz-section { margin-top: 15px; }
+      .quiz-section p.quiz-label { font-size: 18px; font-weight: bold; margin-bottom: 8px; }
+      .quiz-input-row { margin-bottom: 5px; display: flex; align-items: center; gap: 8px; }
+      .quiz-input-row input[type="text"] {
+        width: 60px; padding: 4px 6px; font-size: 16px;
+        font-family: "Times New Roman", Times, serif;
+        border: 2px solid #ccc; border-radius: 4px; text-align: center;
+      }
+      .quiz-input-row input.correct { border-color: #1e8449; background-color: #e8f5e9; }
+      .quiz-input-row input.incorrect { border-color: #c0392b; background-color: #ffebee; }
+      .quiz-input-row .correct-val { color: #1e8449; font-weight: bold; font-size: 14px; }
+      .quiz-feedback { margin-top: 10px; font-size: 17px; font-weight: bold; }
+      .quiz-feedback.correct { color: #1e8449; }
+      .quiz-feedback.incorrect { color: #c0392b; }
+      .quiz-hint { margin-top: 8px; font-size: 15px; color: #555; background: #fff; border: 1px solid #ddd; padding: 8px; border-radius: 5px; }
+      .score-display { margin-top: 10px; font-size: 16px; color: #555; }
+      /* Tabs */
+      .p1-tab-bar { display: flex; gap: 0; margin-top: 20px; }
+      .p1-tab-bar button {
+        border-radius: 5px 5px 0 0;
+        background-color: #bdc3c7;
+        font-size: 14px;
+        padding: 10px 14px;
+        margin: 0;
+      }
+      .p1-tab-bar button.active { background-color: #3498db; font-weight: bold; }
+      .p1-tab-content { display: none; }
+      .p1-tab-content.active { display: block; }
+    
+
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f0f8ff;
+      }
+      h1, h2, h3 { color: #2c3e50; }
+      p.subtitle { color: #555; }
+      .interactive-demo {
+        background-color: #e0f7fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 30px;
+      }
+      button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        margin: 5px 5px 5px 0;
+      }
+      button:hover { background-color: #2980b9; }
+      button:disabled { background-color: #95a5a6; cursor: default; }
+      button:disabled:hover { background-color: #95a5a6; }
+      .hidden { display: none; }
+      .matrix-container {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 10px 20px 10px 0;
+      }
+      .matrix-label { font-weight: bold; font-size: 18px; margin-bottom: 5px; }
+      table.matrix-table { border-collapse: collapse; margin: 5px 0; }
+      table.matrix-table td {
+        border: 1px solid #ddd;
+        padding: 8px 12px;
+        text-align: center;
+        background-color: #fff;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 17px;
+        min-width: 20px;
+      }
+      #matrix-display p.p2-scalar-label { font-size: 18px; font-weight: bold; }
+      .question-section { margin-top: 15px; font-size: 18px; }
+      .feedback { margin-top: 10px; font-size: 17px; font-weight: bold; }
+      .feedback.correct { color: #1e8449; }
+      .feedback.incorrect { color: #c0392b; }
+      .calculation-steps {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+      }
+      .step { margin-bottom: 10px; font-family: "Times New Roman", Times, serif; font-size: 17px; }
+      .result-display { font-size: 19px; font-weight: bold; margin-top: 15px; color: #1565c0; }
+      .quiz-section { margin-top: 15px; }
+      .quiz-section p.quiz-label { font-size: 18px; font-weight: bold; margin-bottom: 8px; }
+      .quiz-matrix-input { border-collapse: collapse; margin: 5px 0; }
+      .quiz-matrix-input td { padding: 3px; }
+      .quiz-matrix-input input[type="text"] {
+        width: 60px; padding: 4px 6px; font-size: 16px;
+        font-family: "Times New Roman", Times, serif;
+        border: 2px solid #ccc; border-radius: 4px; text-align: center;
+      }
+      .quiz-matrix-input input.correct { border-color: #1e8449; background-color: #e8f5e9; }
+      .quiz-matrix-input input.incorrect { border-color: #c0392b; background-color: #ffebee; }
+      .quiz-feedback { margin-top: 10px; font-size: 17px; font-weight: bold; }
+      .quiz-feedback.correct { color: #1e8449; }
+      .quiz-feedback.incorrect { color: #c0392b; }
+      .quiz-hint { margin-top: 8px; font-size: 15px; color: #555; background: #fff; border: 1px solid #ddd; padding: 8px; border-radius: 5px; }
+      .score-display { margin-top: 10px; font-size: 16px; color: #555; }
+      /* Tabs */
+      .p2-tab-bar { display: flex; gap: 0; margin-top: 20px; flex-wrap: wrap; }
+      .p2-tab-bar button {
+        border-radius: 5px 5px 0 0;
+        background-color: #bdc3c7;
+        font-size: 14px;
+        padding: 10px 14px;
+        margin: 0;
+      }
+      .p2-tab-bar button.active { background-color: #3498db; font-weight: bold; }
+      .p2-tab-content { display: none; }
+      .p2-tab-content.active { display: block; }
+    
+
+      /* Main (homework-level) tabs */
+      .main-tab-bar { display: flex; gap: 0; margin-top: 10px; flex-wrap: wrap; }
+      .main-tab-bar button {
+        border-radius: 5px 5px 0 0;
+        background-color: #7f8c8d;
+        color: #fff;
+        font-size: 15px;
+        padding: 12px 20px;
+        margin: 0;
+      }
+      .main-tab-bar button.active { background-color: #2c3e50; font-weight: bold; }
+      .main-tab-content { display: none; }
+      .main-tab-content.active { display: block; }
+      .summary-box {
+        background-color: #e0f7fa;
+        padding: 25px;
+        border-radius: 10px;
+        margin-top: 0;
+      }
+      .summary-grand-total {
+        font-size: 28px;
+        font-weight: bold;
+        color: #1565c0;
+        margin-bottom: 20px;
+      }
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 12px 18px;
+        margin-bottom: 10px;
+        font-size: 17px;
+      }
+      .summary-row .score { font-weight: bold; color: #1e8449; }
+
+      /* Submission code generator */
+      .code-box {
+        background-color: #fff;
+        border: 2px dashed #1565c0;
+        border-radius: 8px;
+        padding: 18px;
+        margin-top: 25px;
+      }
+      .code-box h3 { margin-top: 0; color: #1565c0; }
+      .code-form-row { display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+      .code-form-row input[type="text"] {
+        flex: 1; min-width: 180px; padding: 8px 10px; font-size: 15px;
+        border: 2px solid #ccc; border-radius: 5px;
+      }
+      .code-output-row { display: flex; gap: 8px; align-items: center; margin-top: 10px; flex-wrap: wrap; }
+      #submission-code-output {
+        flex: 1; min-width: 240px; padding: 10px; font-size: 15px;
+        font-family: "Courier New", monospace; font-weight: bold;
+        border: 2px solid #1e8449; border-radius: 5px; background-color: #e8f5e9;
+        color: #1b5e20; letter-spacing: 0.5px;
+      }
+      .copy-btn { background-color: #1e8449; }
+      .copy-btn:hover { background-color: #17663a; }
+      .code-note { font-size: 14px; color: #555; margin-top: 10px; }
+      .code-warning { font-size: 14px; color: #c0392b; margin-top: 8px; font-weight: bold; }
+      .resume-row { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; align-items: center; }
+      .resume-row input[type="text"] {
+        flex: 1; min-width: 220px; padding: 8px 10px; font-size: 15px;
+        border: 2px solid #ccc; border-radius: 5px; font-family: "Courier New", monospace;
+      }
+      .code-form-row input[readonly].locked {
+        background-color: #eceff1; color: #555; cursor: not-allowed; border-color: #b0bec5;
+      }
+      .identity-locked-note { font-size: 13px; color: #1565c0; margin-top: 6px; font-weight: bold; }
+      .unlock-btn { background-color: #b71c1c; margin-top: 10px; }
+      .unlock-btn:hover { background-color: #8e1616; }
+      .integrity-notice {
+        background-color: #eceff1; border: 1px solid #90a4ae; border-radius: 6px;
+        padding: 12px 16px; margin: 15px 0; font-size: 14px; color: #37474f;
+      }
+      .integrity-notice strong { color: #263238; }
+      .code-confirmation {
+        background-color: #e8f5e9; border: 2px solid #1e8449; border-radius: 8px;
+        padding: 14px 18px; margin-top: 12px;
+      }
+      .code-confirmation h4 { margin: 0 0 8px; color: #1b5e20; }
+      .code-confirmation table { border-collapse: collapse; width: 100%; }
+      .code-confirmation table td { padding: 3px 8px 3px 0; font-size: 14px; vertical-align: top; }
+      .code-confirmation table td.label { font-weight: bold; color: #1b5e20; white-space: nowrap; }
+      .code-confirmation .copy-status { margin-top: 8px; font-weight: bold; }
+      .code-confirmation .copy-status.copied { color: #1e8449; }
+      .code-confirmation .copy-status.manual { color: #b7950b; }
+      .code-confirmation .reminder { margin-top: 8px; font-style: italic; color: #37474f; }
+      .print-btn { background-color: #455a64; margin: 10px 0 20px; }
+      .print-btn:hover { background-color: #34495e; }
+      .print-header { display: none; }
+      .print-header h2 { margin: 0 0 8px; }
+      .csv-mode-row { margin: 10px 0; font-size: 14px; }
+      .csv-mode-row label { margin-right: 20px; cursor: pointer; }
+      .csv-summary-list { font-size: 14px; margin: 4px 0; }
+      @media print {
+        .no-print, .main-tab-bar, .code-box, .instructor-toggle, .instructor-panel,
+        #main-tab-p1, #main-tab-p2, #main-tab-p3,
+        p.subtitle, h1 { display: none !important; }
+        .print-header { display: block !important; }
+        .summary-box { border: none; box-shadow: none; padding: 0; }
+      }
+
+      /* Instructor decode panel */
+      .instructor-toggle {
+        margin-top: 25px; font-size: 14px; color: #777; cursor: pointer;
+        text-decoration: underline; display: inline-block;
+      }
+      .instructor-panel {
+        display: none; margin-top: 12px; background-color: #fdf6e3;
+        border: 2px dashed #b7950b; border-radius: 8px; padding: 18px;
+      }
+      .instructor-panel.open { display: block; }
+      .instructor-panel h3 { margin-top: 0; color: #7d6608; }
+      .instructor-panel textarea {
+        width: 100%; min-height: 100px; font-family: "Courier New", monospace;
+        font-size: 14px; padding: 8px; border: 2px solid #ccc; border-radius: 5px;
+        box-sizing: border-box;
+      }
+      table.decode-table { border-collapse: collapse; width: 100%; margin-top: 12px; background: #fff; }
+      table.decode-table th, table.decode-table td {
+        border: 1px solid #ddd; padding: 6px 10px; font-size: 14px; text-align: left;
+      }
+      table.decode-table th { background-color: #f2e6b8; }
+      table.decode-table tr.tampered { background-color: #ffebee; }
+      table.decode-table tr.tampered td.validity { color: #c0392b; font-weight: bold; }
+      table.decode-table td.validity { color: #1e8449; font-weight: bold; }
+
+      .decode-card {
+        background: #fff; border: 2px solid #ccc; border-radius: 8px;
+        padding: 12px 16px; margin: 12px 0;
+      }
+      .decode-card.valid { border-color: #1e8449; }
+      .decode-card.expired { border-color: #b7950b; background-color: #fdf6e3; }
+      .decode-card.invalid { border-color: #c0392b; background-color: #ffebee; }
+      .decode-card-header {
+        display: flex; justify-content: space-between; align-items: baseline;
+        margin-bottom: 6px; flex-wrap: wrap; gap: 8px;
+      }
+      .decode-name { font-size: 17px; font-weight: bold; color: #263238; }
+      .decode-status-badge {
+        font-size: 13px; font-weight: bold; padding: 2px 10px; border-radius: 12px; color: #fff;
+      }
+      .decode-status-badge.valid { background-color: #1e8449; }
+      .decode-status-badge.expired { background-color: #b7950b; }
+      .decode-status-badge.invalid { background-color: #c0392b; }
+      table.decode-info-table { border-collapse: collapse; margin-bottom: 8px; }
+      table.decode-info-table td { padding: 2px 8px 2px 0; font-size: 14px; vertical-align: top; }
+      table.decode-info-table td.label { font-weight: bold; color: #455a64; white-space: nowrap; }
+      .decode-breakdown { font-size: 13px; color: #37474f; border-top: 1px dashed #ccc; padding-top: 6px; }
+      .decode-breakdown .breakdown-row { margin: 2px 0; }
+
+
+
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f0f8ff;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #2c3e50;
+      }
+      p.subtitle {
+        color: #555;
+      }
+      .interactive-demo {
+        background-color: #e0f7fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 30px;
+      }
+      button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        margin: 5px 5px 5px 0;
+      }
+      button:hover {
+        background-color: #2980b9;
+      }
+
+      button:disabled {
+        background-color: #95a5a6;
+        cursor: default;
+      }
+      button:disabled:hover {
+        background-color: #95a5a6;
+      }
+      .hidden {
+        display: none;
+      }
+      #pad-problem-statement {
+        font-size: 18px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 12px 15px;
+        border-radius: 5px;
+      }
+      .pad-calculation-steps {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+      }
+      .step {
+        margin-bottom: 10px;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 17px;
+      }
+      #pad-result-display {
+        font-size: 19px;
+        font-weight: bold;
+        margin-top: 15px;
+        color: #1565c0;
+      }
+      #pad-diagram-section {
+        margin-top: 20px;
+      }
+      #pad-diagram-section h3 {
+        margin-bottom: 5px;
+      }
+      #pad-diagram-container {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        text-align: center;
+      }
+      .legend {
+        margin-top: 8px;
+        font-size: 15px;
+      }
+      .legend span {
+        display: inline-block;
+        margin-right: 15px;
+        margin-bottom: 5px;
+      }
+      .legend .swatch {
+        display: inline-block;
+        width: 20px;
+        height: 3px;
+        margin-right: 5px;
+        vertical-align: middle;
+      }
+      #pad-quiz-section { margin-top: 15px; }
+      #pad-quiz-section p.quiz-label { font-size: 18px; font-weight: bold; margin-bottom: 8px; }
+      .pad-quiz-input-row { margin-bottom: 5px; display: flex; align-items: center; gap: 8px; }
+      .pad-quiz-input-row input[type="text"] {
+        width: 60px; padding: 4px 6px; font-size: 16px;
+        font-family: "Times New Roman", Times, serif;
+        border: 2px solid #ccc; border-radius: 4px; text-align: center;
+      }
+      .pad-quiz-input-row input.correct { border-color: #1e8449; background-color: #e8f5e9; }
+      .pad-quiz-input-row input.incorrect { border-color: #c0392b; background-color: #ffebee; }
+      .pad-quiz-input-row .correct-val { color: #1e8449; font-weight: bold; font-size: 14px; }
+      #pad-quiz-feedback { margin-top: 10px; font-size: 17px; font-weight: bold; }
+      #pad-quiz-feedback.correct { color: #1e8449; }
+      #pad-quiz-feedback.incorrect { color: #c0392b; }
+      #pad-quiz-hint { margin-top: 8px; font-size: 15px; color: #555; background: #fff; border: 1px solid #ddd; padding: 8px; border-radius: 5px; }
+      #pad-score-display { margin-top: 10px; font-size: 16px; color: #555; }
+    
+
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f0f8ff;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #2c3e50;
+      }
+      p.subtitle {
+        color: #555;
+      }
+      .interactive-demo {
+        background-color: #e0f7fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 30px;
+      }
+      button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        margin: 5px 5px 5px 0;
+      }
+      button:hover {
+        background-color: #2980b9;
+      }
+
+      button:disabled {
+        background-color: #95a5a6;
+        cursor: default;
+      }
+      button:disabled:hover {
+        background-color: #95a5a6;
+      }
+      .hidden {
+        display: none;
+      }
+      table.points-table {
+        border-collapse: collapse;
+        margin: 10px 0;
+        background-color: #fff;
+      }
+      table.points-table th,
+      table.points-table td {
+        border: 1px solid #ddd;
+        padding: 8px 14px;
+        text-align: center;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 17px;
+      }
+      table.points-table th {
+        background-color: #f0f0f0;
+      }
+      .ncv-calculation-steps {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+      }
+      .step {
+        margin-bottom: 10px;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 17px;
+      }
+      #ncv-result-display {
+        margin-top: 15px;
+      }
+      #result-label {
+        font-size: 19px;
+        font-weight: bold;
+        color: #1565c0;
+        margin-bottom: 5px;
+      }
+      .vector-container {
+        display: inline-block;
+        vertical-align: middle;
+      }
+      table.vector-table {
+        border-collapse: collapse;
+      }
+      table.vector-table td {
+        border: 1px solid #ddd;
+        padding: 6px 20px;
+        text-align: center;
+        background-color: #fff;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 17px;
+        min-width: 20px;
+      }
+      table.vector-table td.revealed {
+        color: #1565c0;
+        font-weight: bold;
+        background-color: #e3f2fd;
+      }
+      table.vector-table td.pending {
+        color: #999;
+      }
+      .bracket {
+        font-size: 60px;
+        font-weight: 100;
+        color: #333;
+        vertical-align: middle;
+        padding: 0 4px;
+      }
+      #ncv-quiz-section { margin-top: 15px; }
+      #ncv-quiz-section p.quiz-label { font-size: 18px; font-weight: bold; margin-bottom: 8px; }
+      .ncv-quiz-input-row { margin-bottom: 5px; display: flex; align-items: center; gap: 8px; }
+      .ncv-quiz-input-row input[type="text"] {
+        width: 60px; padding: 4px 6px; font-size: 16px;
+        font-family: "Times New Roman", Times, serif;
+        border: 2px solid #ccc; border-radius: 4px; text-align: center;
+      }
+      .ncv-quiz-input-row input.correct { border-color: #1e8449; background-color: #e8f5e9; }
+      .ncv-quiz-input-row input.incorrect { border-color: #c0392b; background-color: #ffebee; }
+      .ncv-quiz-input-row .correct-val { color: #1e8449; font-weight: bold; font-size: 14px; }
+      #ncv-quiz-feedback { margin-top: 10px; font-size: 17px; font-weight: bold; }
+      #ncv-quiz-feedback.correct { color: #1e8449; }
+      #ncv-quiz-feedback.incorrect { color: #c0392b; }
+      #ncv-quiz-hint { margin-top: 8px; font-size: 15px; color: #555; background: #fff; border: 1px solid #ddd; padding: 8px; border-radius: 5px; }
+      #ncv-score-display { margin-top: 10px; font-size: 16px; color: #555; }
+    
+
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f0f8ff;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #2c3e50;
+      }
+      p.subtitle {
+        color: #555;
+      }
+      .interactive-demo {
+        background-color: #e0f7fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 30px;
+      }
+      button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        margin: 5px 5px 5px 0;
+      }
+      button:hover {
+        background-color: #2980b9;
+      }
+
+      button:disabled {
+        background-color: #95a5a6;
+        cursor: default;
+      }
+      button:disabled:hover {
+        background-color: #95a5a6;
+      }
+      .hidden {
+        display: none;
+      }
+      #ncl-vector-display {
+        margin-bottom: 15px;
+      }
+      #ncl-result-label {
+        font-size: 19px;
+        font-weight: bold;
+        color: #1565c0;
+        margin-bottom: 5px;
+      }
+      .vector-container {
+        display: inline-block;
+        vertical-align: middle;
+      }
+      table.vector-table {
+        border-collapse: collapse;
+      }
+      table.vector-table td {
+        border: 1px solid #ddd;
+        padding: 6px 20px;
+        text-align: center;
+        background-color: #fff;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 17px;
+        min-width: 20px;
+      }
+      table.vector-table td.entry-label {
+        color: #888;
+        font-size: 13px;
+        border: none;
+        padding: 2px 20px 0 20px;
+        background-color: transparent;
+      }
+      table.vector-table td.target-highlight {
+        color: #b45f06;
+        font-weight: bold;
+        background-color: #fff3cd;
+        outline: 3px solid #ff9800;
+      }
+      .bracket {
+        font-size: 60px;
+        font-weight: 100;
+        color: #333;
+        vertical-align: middle;
+        padding: 0 4px;
+      }
+      #ncl-question-section {
+        margin-top: 15px;
+        font-size: 18px;
+      }
+      #ncl-answer-display {
+        margin-top: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #1565c0;
+      }
+      #ncl-quiz-section { margin-top: 15px; }
+      #ncl-quiz-section p.quiz-label { font-size: 18px; font-weight: bold; margin-bottom: 8px; }
+      .ncl-quiz-input-row { margin-bottom: 5px; display: flex; align-items: center; gap: 8px; }
+      .ncl-quiz-input-row input[type="text"] {
+        width: 60px; padding: 4px 6px; font-size: 16px;
+        font-family: "Times New Roman", Times, serif;
+        border: 2px solid #ccc; border-radius: 4px; text-align: center;
+      }
+      .ncl-quiz-input-row input.correct { border-color: #1e8449; background-color: #e8f5e9; }
+      .ncl-quiz-input-row input.incorrect { border-color: #c0392b; background-color: #ffebee; }
+      .ncl-quiz-input-row .correct-val { color: #1e8449; font-weight: bold; font-size: 14px; }
+      #ncl-quiz-feedback { margin-top: 10px; font-size: 17px; font-weight: bold; }
+      #ncl-quiz-feedback.correct { color: #1e8449; }
+      #ncl-quiz-feedback.incorrect { color: #c0392b; }
+      #ncl-quiz-hint { margin-top: 8px; font-size: 15px; color: #555; background: #fff; border: 1px solid #ddd; padding: 8px; border-radius: 5px; }
+      #ncl-score-display { margin-top: 10px; font-size: 16px; color: #555; }
+    
+
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f0f8ff;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #2c3e50;
+      }
+      p.subtitle {
+        color: #555;
+      }
+      .interactive-demo {
+        background-color: #e0f7fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 30px;
+      }
+      button {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        margin: 5px 5px 5px 0;
+      }
+      button:hover {
+        background-color: #2980b9;
+      }
+
+      button:disabled {
+        background-color: #95a5a6;
+        cursor: default;
+      }
+      button:disabled:hover {
+        background-color: #95a5a6;
+      }
+      .hidden {
+        display: none;
+      }
+      #ndv-vectors-display {
+        margin-bottom: 15px;
+      }
+      .vector-block {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 30px;
+      }
+      .vector-block-label {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      .vector-container {
+        display: inline-block;
+        vertical-align: middle;
+      }
+      table.vector-table {
+        border-collapse: collapse;
+      }
+      table.vector-table td {
+        border: 1px solid #ddd;
+        padding: 6px 20px;
+        text-align: center;
+        background-color: #fff;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 17px;
+        min-width: 20px;
+      }
+      table.vector-table td.revealed {
+        color: #1565c0;
+        font-weight: bold;
+        background-color: #e3f2fd;
+      }
+      table.vector-table td.pending {
+        color: #999;
+      }
+      table.vector-table td.target-highlight {
+        color: #b45f06;
+        font-weight: bold;
+        background-color: #fff3cd;
+        outline: 3px solid #ff9800;
+      }
+      .bracket {
+        font-size: 60px;
+        font-weight: 100;
+        color: #333;
+        vertical-align: middle;
+        padding: 0 4px;
+      }
+      #result-label {
+        font-size: 19px;
+        font-weight: bold;
+        color: #1565c0;
+        margin-bottom: 5px;
+      }
+      .ndv-calculation-steps {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+      }
+      .step {
+        margin-bottom: 10px;
+        font-family: "Times New Roman", Times, serif;
+        font-size: 17px;
+      }
+      .question-section {
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid #b2dfdb;
+        font-size: 18px;
+      }
+      #answer-display {
+        margin-top: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #1565c0;
+      }
+      #ndv-quiz-section { margin-top: 15px; }
+      #ndv-quiz-section p.quiz-label { font-size: 18px; font-weight: bold; margin-bottom: 8px; }
+      .ndv-quiz-input-row { margin-bottom: 5px; display: flex; align-items: center; gap: 8px; }
+      .ndv-quiz-input-row input[type="text"] {
+        width: 60px; padding: 4px 6px; font-size: 16px;
+        font-family: "Times New Roman", Times, serif;
+        border: 2px solid #ccc; border-radius: 4px; text-align: center;
+      }
+      .ndv-quiz-input-row input.correct { border-color: #1e8449; background-color: #e8f5e9; }
+      .ndv-quiz-input-row input.incorrect { border-color: #c0392b; background-color: #ffebee; }
+      .ndv-quiz-input-row .correct-val { color: #1e8449; font-weight: bold; font-size: 14px; }
+      #ndv-quiz-feedback { margin-top: 10px; font-size: 17px; font-weight: bold; }
+      #ndv-quiz-feedback.correct { color: #1e8449; }
+      #ndv-quiz-feedback.incorrect { color: #c0392b; }
+      #ndv-quiz-hint { margin-top: 8px; font-size: 15px; color: #555; background: #fff; border: 1px solid #ddd; padding: 8px; border-radius: 5px; }
+      #ndv-score-display { margin-top: 10px; font-size: 16px; color: #555; }
+    
+
+      /* Tabs */
+      .p3-tab-bar { display: flex; gap: 0; margin-top: 20px; flex-wrap: wrap; }
+      .p3-tab-bar button {
+        border-radius: 5px 5px 0 0;
+        background-color: #bdc3c7;
+        font-size: 14px;
+        padding: 10px 14px;
+        margin: 0;
+      }
+      .p3-tab-bar button.active { background-color: #3498db; font-weight: bold; }
+      .p3-tab-content { display: none; }
+      .p3-tab-content.active { display: block; }
+
+    
+    </style>
+  </head>
+  <body>
+    <h1>Homework 1</h1>
+    <p class="subtitle">Complete the problems below. Your combined score is tracked on the Summary tab.</p>
+
+    <div class="main-tab-bar" id="main-tab-bar">
+      <button class="active" onclick="switchMainTab('summary')">Summary</button>
+      <button onclick="switchMainTab('p1')">Problem 1: Vectors</button>
+      <button onclick="switchMainTab('p2')">Problem 2: Matrices</button>
+      <button onclick="switchMainTab('p3')">Problem 3: Nodal Vectors</button>
+    </div>
+
+    <div class="main-tab-content active" id="main-tab-summary">
+      <div class="summary-box">
+        <div class="print-header hidden" id="print-header">
+          <h2>Homework 1 — Score Summary</h2>
+          <p><strong>Name:</strong> <span id="print-header-name"></span> &nbsp;&nbsp; <strong>ID:</strong> <span id="print-header-id"></span></p>
+          <p><strong>Printed:</strong> <span id="print-header-date"></span></p>
+        </div>
+        <div class="summary-grand-total">Total Score: <span id="grand-total">0.0</span> / 44</div>
+        <button class="print-btn no-print" onclick="printSummary()">&#128424; Print / Save as PDF</button>
+        <div class="summary-row hidden" id="summary-baseline-row">
+          <span>Carried over from a resumed session</span>
+          <span class="score"><span id="summary-baseline-score">0.0</span></span>
+        </div>
+        <div class="summary-row">
+          <span>Problem 1: Vectors (max 12)</span>
+          <span class="score"><span id="summary-p1-score">0.0</span> / 12</span>
+        </div>
+        <div class="summary-row">
+          <span>Problem 2: Matrices (max 20)</span>
+          <span class="score"><span id="summary-p2-score">0.0</span> / 20</span>
+        </div>
+        <div class="summary-row">
+          <span>Problem 3: Nodal Vectors (max 12)</span>
+          <span class="score"><span id="summary-p3-score">0.0</span> / 12</span>
+        </div>
+        <p class="subtitle" style="margin-top: 20px;">Switch to the Problem 1, Problem 2, or Problem 3 tab above to work through the questions.</p>
+
+        <div class="integrity-notice">
+          <strong>Academic integrity notice:</strong> Submit only a code generated from your own completed assignment. Submission codes are checked for validity and may be reviewed against Canvas submission records. Altered, expired, or invalid codes may receive no credit pending instructor review.
+        </div>
+
+        <div class="code-box">
+          <h3>Get Your Submission Code</h3>
+          <p>If you're continuing a previous session, paste your earlier code below and click "Resume" first — it will restore your name, ID, and prior score as your starting point.</p>
+          <div class="resume-row">
+            <input type="text" id="resume-code-input" placeholder="Paste a previous code to resume...">
+            <button onclick="resumeFromCode()">Resume</button>
+          </div>
+          <p class="code-warning hidden" id="resume-warning-msg"></p>
+
+          <p>When you are finished, enter your info below (if not already filled in by resuming) and click "Generate Code." Copy the resulting code and paste it into the Canvas assignment for Homework 1 as your submission.</p>
+          <div class="code-form-row">
+            <input type="text" id="student-name-input" placeholder="Full name (as on Canvas)">
+            <input type="text" id="student-id-input" placeholder="Canvas login / email / student ID">
+          </div>
+          <button onclick="generateSubmissionCode()">Generate Code</button>
+          <div class="code-output-row hidden" id="code-output-row">
+            <input type="text" id="submission-code-output" readonly>
+            <button class="copy-btn" onclick="copySubmissionCode()">Copy</button>
+          </div>
+
+          <div class="code-confirmation hidden" id="code-confirmation">
+            <h4>&#10003; Code Generated</h4>
+            <table>
+              <tr><td class="label">Name:</td><td id="confirm-name"></td></tr>
+              <tr><td class="label">ID:</td><td id="confirm-id"></td></tr>
+              <tr><td class="label">Score:</td><td id="confirm-score"></td></tr>
+              <tr><td class="label">Generated:</td><td id="confirm-datetime"></td></tr>
+            </table>
+            <p class="copy-status" id="confirm-copy-status"></p>
+            <p class="reminder">Paste the entire code into the Canvas Homework 1 text-entry submission.</p>
+          </div>
+
+          <p class="code-note">The code encodes your name, ID, and the full score breakdown for every sub-tab (<span id="code-score-snapshot">0.0</span> / 44) with a tamper-check built in. Your submission code records the date and time it was generated. Generate a new code after making changes and immediately before submitting in Canvas. Submit the code before the Canvas due date. Keep a copy of your code until your grade is posted.</p>
+          <p class="identity-locked-note hidden" id="identity-locked-note">Name and ID are now locked for this session.</p>
+          <p class="code-warning hidden" id="code-warning-msg"></p>
+          <button class="unlock-btn" onclick="unlockIdentityAndReset()">Unlock Identity / Start Over</button>
+        </div>
+
+        <span class="instructor-toggle" id="instructor-toggle-link" onclick="toggleInstructorPanel()">Instructor tools (decode submission codes) &#9662;</span>
+        <div class="instructor-panel" id="instructor-panel">
+          <h3>Step 1: Decode Submission Codes</h3>
+          <p>Paste one or more student codes below (one per line — extra text on the line is ignored) and click "Decode" to recover name, ID, and score.</p>
+          <textarea id="decode-input" placeholder="Paste codes here, one per line..."></textarea>
+          <div style="margin-top: 10px;">
+            <button onclick="decodeSubmissionCodes()">Decode</button>
+          </div>
+          <div id="decode-results"></div>
+
+          <div id="csv-step" class="hidden" style="margin-top: 25px; border-top: 2px dashed #b7950b; padding-top: 15px;">
+            <h3>Step 2: Auto-fill Your Canvas Gradebook (optional)</h3>
+            <p>In Canvas, go to <strong>Grades → Export</strong> to download the current gradebook CSV. Upload it here — this tool will match each decoded student to a row by email / login ID (falling back to name) and fill in the score for the column you pick. Nothing is uploaded anywhere; the file is processed entirely in your browser.</p>
+            <input type="file" id="gradebook-csv-input" accept=".csv" onchange="handleGradebookCsvUpload(event)">
+            <div id="csv-column-picker" class="hidden" style="margin-top: 10px;">
+              <label for="csv-assignment-column">Assignment column to fill: </label>
+              <select id="csv-assignment-column"></select>
+              <div class="csv-mode-row">
+                <label><input type="radio" name="csv-fill-mode" value="overwrite" checked> Overwrite existing scores</label>
+                <label><input type="radio" name="csv-fill-mode" value="blank"> Only fill blank cells</label>
+              </div>
+              <button onclick="fillGradebookCsv()">Fill Scores &amp; Download</button>
+            </div>
+            <div id="csv-match-summary"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-tab-content" id="main-tab-p1">
+
+    <h1 id="p1-problem-title">Problem 1. Maximum score = 12 | Total score = <span id="p1-total-score">0.0</span></h1>
+
+    <div class="p1-tab-bar" id="p1-tab-bar">
+      <button class="active" onclick="p1SwitchTab('sum')">A + B</button>
+      <button onclick="p1SwitchTab('diff')">A - B</button>
+      <button onclick="p1SwitchTab('scalar')">kA</button>
+      <button onclick="p1SwitchTab('combo')">c1A + c2B</button>
+    </div>
+
+    <!-- Vector Sum -->
+    <div class="p1-tab-content active" id="p1-tab-sum">
+      <p class="subtitle">A and B are two vectors. Answer the question and enter your solution.</p>
+      <div class="interactive-demo">
+        <div id="p1-sum-vector-display" class="vector-display"></div>
+        <div id="p1-sum-question-section" class="question-section">
+          <p>Does A + B exist?</p>
+          <button id="p1-sum-yesBtn" onclick="p1SumAnswerQuestion(true)">Yes</button>
+          <button id="p1-sum-noBtn" onclick="p1SumAnswerQuestion(false)">No</button>
+        </div>
+        <div id="p1-sum-feedback" class="feedback"></div>
+        <div id="p1-sum-quiz-section" class="quiz-section hidden">
+          <p class="quiz-label" id="p1-sum-quiz-prompt"></p>
+          <div id="p1-sum-quiz-inputs"></div>
+          <button id="p1-sum-quizCheckBtn" onclick="p1SumCheckQuiz()">Check Answer</button>
+        </div>
+        <div id="p1-sum-quiz-feedback" class="quiz-feedback"></div>
+        <div id="p1-sum-quiz-hint" class="quiz-hint hidden"></div>
+        <div id="p1-sum-score-display" class="score-display"></div>
+        <div id="p1-sum-result-display" class="result-display"></div>
+        <div class="calculation-steps" id="p1-sum-calculation-steps"></div>
+        <button class="hidden" id="p1-sum-generateBtn" onclick="p1SumGenerateVectors()">Generate New Vectors</button>
+      </div>
+    </div>
+
+    <!-- Vector Subtraction -->
+    <div class="p1-tab-content" id="p1-tab-diff">
+      <p class="subtitle">A and B are two vectors. Answer the question and enter your solution.</p>
+      <div class="interactive-demo">
+        <div id="p1-diff-vector-display" class="vector-display"></div>
+        <div id="p1-diff-question-section" class="question-section">
+          <p>Does A - B exist?</p>
+          <button id="p1-diff-yesBtn" onclick="p1DiffAnswerQuestion(true)">Yes</button>
+          <button id="p1-diff-noBtn" onclick="p1DiffAnswerQuestion(false)">No</button>
+        </div>
+        <div id="p1-diff-feedback" class="feedback"></div>
+        <div id="p1-diff-quiz-section" class="quiz-section hidden">
+          <p class="quiz-label" id="p1-diff-quiz-prompt"></p>
+          <div id="p1-diff-quiz-inputs"></div>
+          <button id="p1-diff-quizCheckBtn" onclick="p1DiffCheckQuiz()">Check Answer</button>
+        </div>
+        <div id="p1-diff-quiz-feedback" class="quiz-feedback"></div>
+        <div id="p1-diff-quiz-hint" class="quiz-hint hidden"></div>
+        <div id="p1-diff-score-display" class="score-display"></div>
+        <div id="p1-diff-result-display" class="result-display"></div>
+        <div class="calculation-steps" id="p1-diff-calculation-steps"></div>
+        <button class="hidden" id="p1-diff-generateBtn" onclick="p1DiffGenerateVectors()">Generate New Vectors</button>
+      </div>
+    </div>
+
+    <!-- Scalar Multiplication -->
+    <div class="p1-tab-content" id="p1-tab-scalar">
+      <p class="subtitle">A is a vector and k is a scalar. Enter your solution for kA.</p>
+      <div class="interactive-demo">
+        <button onclick="p1ScalarGenerateVectors()">Generate New Vector</button>
+        <div id="p1-scalar-vector-display" class="vector-display"></div>
+        <div id="p1-scalar-quiz-section" class="quiz-section hidden">
+          <p class="quiz-label" id="p1-scalar-quiz-prompt"></p>
+          <div id="p1-scalar-quiz-inputs"></div>
+          <button id="p1-scalar-quizCheckBtn" onclick="p1ScalarCheckQuiz()">Check Answer</button>
+        </div>
+        <div id="p1-scalar-quiz-feedback" class="quiz-feedback"></div>
+        <div id="p1-scalar-quiz-hint" class="quiz-hint hidden"></div>
+        <div id="p1-scalar-score-display" class="score-display"></div>
+        <div id="p1-scalar-result-display" class="result-display"></div>
+        <div class="calculation-steps" id="p1-scalar-calculation-steps"></div>
+      </div>
+    </div>
+
+    <!-- Linear Combination -->
+    <div class="p1-tab-content" id="p1-tab-combo">
+      <p class="subtitle">A and B are two vectors, and c<sub>1</sub> and c<sub>2</sub> are scalars. Answer the question and enter your solution for c<sub>1</sub>A + c<sub>2</sub>B.</p>
+      <div class="interactive-demo">
+        <div id="p1-combo-vector-display" class="vector-display"></div>
+        <div id="p1-combo-question-section" class="question-section">
+          <p>Does c<sub>1</sub>A + c<sub>2</sub>B exist?</p>
+          <button id="p1-combo-yesBtn" onclick="p1ComboAnswerQuestion(true)">Yes</button>
+          <button id="p1-combo-noBtn" onclick="p1ComboAnswerQuestion(false)">No</button>
+        </div>
+        <div id="p1-combo-feedback" class="feedback"></div>
+        <div id="p1-combo-quiz-section" class="quiz-section hidden">
+          <p class="quiz-label" id="p1-combo-quiz-prompt"></p>
+          <div id="p1-combo-quiz-inputs"></div>
+          <button id="p1-combo-quizCheckBtn" onclick="p1ComboCheckQuiz()">Check Answer</button>
+        </div>
+        <div id="p1-combo-quiz-feedback" class="quiz-feedback"></div>
+        <div id="p1-combo-quiz-hint" class="quiz-hint hidden"></div>
+        <div id="p1-combo-score-display" class="score-display"></div>
+        <div id="p1-combo-result-display" class="result-display"></div>
+        <div class="calculation-steps" id="p1-combo-calculation-steps"></div>
+        <button class="hidden" id="p1-combo-generateBtn" onclick="p1ComboGenerateVectors()">Generate New Vectors</button>
+      </div>
+    </div>
+
+    
+  
+    </div>
+
+    <div class="main-tab-content" id="main-tab-p2">
+
+    <h1 id="p2-problem-title">Problem 2. Maximum score = 20 | Total score = <span id="p2-total-score">0.0</span></h1>
+
+    <div class="p2-tab-bar" id="p2-tab-bar">
+      <button class="active" onclick="p2SwitchTab('sum')">A + B</button>
+      <button onclick="p2SwitchTab('diff')">A - B</button>
+      <button onclick="p2SwitchTab('prod')">A&times;B</button>
+      <button onclick="p2SwitchTab('trans')">A<sup>T</sup></button>
+      <button onclick="p2SwitchTab('scalar')">kA</button>
+    </div>
+
+    <!-- Matrix Sum -->
+    <div class="p2-tab-content active" id="p2-tab-sum">
+      <p class="subtitle">A and B are two matrices. Answer the question and enter your solution.</p>
+      <div class="interactive-demo">
+        <div id="p2-sum-matrix-display"></div>
+        <div id="p2-sum-question-section" class="question-section">
+          <p>Does A + B exist?</p>
+          <button id="p2-sum-yesBtn" onclick="p2SumAnswerQuestion(true)">Yes</button>
+          <button id="p2-sum-noBtn" onclick="p2SumAnswerQuestion(false)">No</button>
+        </div>
+        <div id="p2-sum-feedback" class="feedback"></div>
+        <div id="p2-sum-quiz-section" class="quiz-section hidden">
+          <p class="quiz-label" id="p2-sum-quiz-prompt"></p>
+          <div id="p2-sum-quiz-inputs"></div>
+          <button id="p2-sum-quizCheckBtn" onclick="p2SumCheckQuiz()">Check Answer</button>
+        </div>
+        <div id="p2-sum-quiz-feedback" class="quiz-feedback"></div>
+        <div id="p2-sum-quiz-hint" class="quiz-hint hidden"></div>
+        <div id="p2-sum-score-display" class="score-display"></div>
+        <div id="p2-sum-result-display" class="result-display"></div>
+        <div class="calculation-steps" id="p2-sum-calculation-steps"></div>
+        <button class="hidden" id="p2-sum-generateBtn" onclick="p2SumGenerateMatrices()">Generate New Matrices</button>
+      </div>
+    </div>
+
+    <!-- Matrix Subtraction -->
+    <div class="p2-tab-content" id="p2-tab-diff">
+      <p class="subtitle">A and B are two matrices. Answer the question and enter your solution.</p>
+      <div class="interactive-demo">
+        <div id="p2-diff-matrix-display"></div>
+        <div id="p2-diff-question-section" class="question-section">
+          <p>Does A - B exist?</p>
+          <button id="p2-diff-yesBtn" onclick="p2DiffAnswerQuestion(true)">Yes</button>
+          <button id="p2-diff-noBtn" onclick="p2DiffAnswerQuestion(false)">No</button>
+        </div>
+        <div id="p2-diff-feedback" class="feedback"></div>
+        <div id="p2-diff-quiz-section" class="quiz-section hidden">
+          <p class="quiz-label" id="p2-diff-quiz-prompt"></p>
+          <div id="p2-diff-quiz-inputs"></div>
+          <button id="p2-diff-quizCheckBtn" onclick="p2DiffCheckQuiz()">Check Answer</button>
+        </div>
+        <div id="p2-diff-quiz-feedback" class="quiz-feedback"></div>
+        <div id="p2-diff-quiz-hint" class="quiz-hint hidden"></div>
+        <div id="p2-diff-score-display" class="score-display"></div>
+        <div id="p2-diff-result-display" class="result-display"></div>
+        <div class="calculation-steps" id="p2-diff-calculation-steps"></div>
+        <button class="hidden" id="p2-diff-generateBtn" onclick="p2DiffGenerateMatrices()">Generate New Matrices</button>
+      </div>
+    </div>
+
+    <!-- Matrix Product -->
+    <div class="p2-tab-content" id="p2-tab-prod">
+      <p class="subtitle">A and B are two matrices. Answer the question and enter your solution for A&times;B.</p>
+      <div class="interactive-demo">
+        <div id="p2-prod-matrix-display"></div>
+        <div id="p2-prod-question-section" class="question-section">
+          <p>Does A&times;B exist?</p>
+          <button id="p2-prod-yesBtn" onclick="p2ProdAnswerQuestion(true)">Yes</button>
+          <button id="p2-prod-noBtn" onclick="p2ProdAnswerQuestion(false)">No</button>
+        </div>
+        <div id="p2-prod-feedback" class="feedback"></div>
+        <div id="p2-prod-quiz-section" class="quiz-section hidden">
+          <p class="quiz-label" id="p2-prod-quiz-prompt"></p>
+          <div id="p2-prod-quiz-inputs"></div>
+          <button id="p2-prod-quizCheckBtn" onclick="p2ProdCheckQuiz()">Check Answer</button>
+        </div>
+        <div id="p2-prod-quiz-feedback" class="quiz-feedback"></div>
+        <div id="p2-prod-quiz-hint" class="quiz-hint hidden"></div>
+        <div id="p2-prod-score-display" class="score-display"></div>
+        <div id="p2-prod-result-display" class="result-display"></div>
+        <div class="calculation-steps" id="p2-prod-calculation-steps"></div>
+        <button class="hidden" id="p2-prod-generateBtn" onclick="p2ProdGenerateMatrices()">Generate New Matrices</button>
+      </div>
+    </div>
+
+    <!-- Matrix Transpose -->
+    <div class="p2-tab-content" id="p2-tab-trans">
+      <p class="subtitle">A is a matrix. Enter your solution for A<sup>T</sup>.</p>
+      <div class="interactive-demo">
+        <button onclick="p2TransGenerateMatrix()">Generate New Matrix</button>
+        <div id="p2-trans-matrix-display"></div>
+        <div id="p2-trans-quiz-section" class="quiz-section hidden">
+          <p class="quiz-label" id="p2-trans-quiz-prompt"></p>
+          <div id="p2-trans-quiz-inputs"></div>
+          <button id="p2-trans-quizCheckBtn" onclick="p2TransCheckQuiz()">Check Answer</button>
+        </div>
+        <div id="p2-trans-quiz-feedback" class="quiz-feedback"></div>
+        <div id="p2-trans-quiz-hint" class="quiz-hint hidden"></div>
+        <div id="p2-trans-score-display" class="score-display"></div>
+        <div id="p2-trans-result-display" class="result-display"></div>
+        <div class="calculation-steps" id="p2-trans-calculation-steps"></div>
+      </div>
+    </div>
+
+    <!-- Scalar Multiplication -->
+    <div class="p2-tab-content" id="p2-tab-scalar">
+      <p class="subtitle">A is a matrix and k is a scalar. Enter your solution for kA.</p>
+      <div class="interactive-demo">
+        <button onclick="p2ScalarGenerateMatrix()">Generate New Matrix</button>
+        <div id="p2-scalar-matrix-display"></div>
+        <div id="p2-scalar-quiz-section" class="quiz-section hidden">
+          <p class="quiz-label" id="p2-scalar-quiz-prompt"></p>
+          <div id="p2-scalar-quiz-inputs"></div>
+          <button id="p2-scalar-quizCheckBtn" onclick="p2ScalarCheckQuiz()">Check Answer</button>
+        </div>
+        <div id="p2-scalar-quiz-feedback" class="quiz-feedback"></div>
+        <div id="p2-scalar-quiz-hint" class="quiz-hint hidden"></div>
+        <div id="p2-scalar-score-display" class="score-display"></div>
+        <div id="p2-scalar-result-display" class="result-display"></div>
+        <div class="calculation-steps" id="p2-scalar-calculation-steps"></div>
+      </div>
+    </div>
+
+    
+  
+    </div>
+
+    <div class="main-tab-content" id="main-tab-p3">
+
+    <h1 id="p3-problem-title">Problem 3. Maximum score = 12 | Total score = <span id="p3-total-score">0.0</span></h1>
+
+    <div class="p3-tab-bar" id="p3-topbar">
+      <button class="active" onclick="p3SwitchTab('pad')">Position After Displacement</button>
+      <button onclick="p3SwitchTab('ncv')">Nodal Coordinate Vector</button>
+      <button onclick="p3SwitchTab('ncl')">Coordinate Lookup</button>
+      <button onclick="p3SwitchTab('ndv')">Displacement Vector</button>
+    </div>
+
+    <!-- Position Vector After Displacement -->
+    <div class="p3-tab-content active" id="p3-tab-pad">
+
+    <p class="subtitle" id="pad-problem-subtitle">
+      A point initially had coordinates (a, b) in the x-y plane. It was displaced by c units in the x-direction and d units in
+      the y-direction. Determine the position vector of the point after the displacement.
+    </p>
+
+    <div class="interactive-demo">
+      <div id="pad-problem-statement"></div>
+
+      <div id="pad-quiz-section" class="hidden">
+        <p class="quiz-label" id="pad-quiz-prompt"></p>
+        <div id="pad-quiz-inputs"></div>
+        <button id="pad-quizCheckBtn" onclick="padCheckQuiz()">Check Answer</button>
+      </div>
+      <div id="pad-quiz-feedback"></div>
+      <div id="pad-quiz-hint" class="hidden"></div>
+      <div id="pad-score-display"></div>
+
+
+      <div id="pad-result-display"></div>
+      <div class="pad-calculation-steps" id="pad-calculation-steps"></div>
+
+      <div id="pad-diagram-section" class="hidden">
+        <h3>Position and Displacement Vectors</h3>
+        <div id="pad-diagram-container"></div>
+        <div class="legend">
+          <span><span class="swatch" style="background-color: #9e9e9e; border-top: 2px dashed #9e9e9e;"></span>Initial position vector</span>
+          <span><span class="swatch" style="background-color: #1565c0;"></span>Final position vector</span>
+          <span><span class="swatch" style="background-color: #c0392b;"></span>Displacement vector</span>
+          <span><span class="swatch" style="background-color: #e74c3c; border-top: 2px dotted #e74c3c;"></span>Displacement vector (from origin)</span>
+        </div>
+      </div>
+
+      <button class="hidden" id="pad-generateBtn" onclick="padGenerateProblem()">Generate New Problem</button>
+    </div>
+
+    
+  
+    </div>
+
+    <!-- Nodal Coordinate Vector -->
+    <div class="p3-tab-content" id="p3-tab-ncv">
+
+    <p class="subtitle" id="ncv-problem-subtitle">
+      Four points have the following coordinates in x-y-z space. Construct the nodal coordinate vector.
+    </p>
+
+    <div class="interactive-demo">
+      <div id="ncv-points-display"></div>
+
+      <div id="ncv-quiz-section" class="hidden">
+        <p class="quiz-label" id="ncv-quiz-prompt"></p>
+        <div id="ncv-quiz-inputs"></div>
+        <button id="ncv-quizCheckBtn" onclick="ncvCheckQuiz()">Check Answer</button>
+      </div>
+      <div id="ncv-quiz-feedback"></div>
+      <div id="ncv-quiz-hint" class="hidden"></div>
+      <div id="ncv-score-display"></div>
+
+      <div id="ncv-result-display"></div>
+      <div class="ncv-calculation-steps" id="ncv-calculation-steps"></div>
+
+      <button class="hidden" id="ncv-generateBtn" onclick="ncvGenerateProblem()">Generate New Points</button>
+    </div>
+
+    
+  
+    </div>
+
+    <!-- Nodal Coordinate Lookup -->
+    <div class="p3-tab-content" id="p3-tab-ncl">
+
+    <p class="subtitle">
+      The nodal coordinate vector consists of the coordinates of four points in x-y-z space.
+    </p>
+
+    <div class="interactive-demo">
+      <div id="ncl-vector-display"></div>
+
+      <div id="ncl-question-section"></div>
+
+      <div id="ncl-quiz-section" class="hidden">
+        <p class="quiz-label" id="ncl-quiz-prompt"></p>
+        <div id="ncl-quiz-inputs"></div>
+        <button id="ncl-quizCheckBtn" onclick="nclCheckQuiz()">Check Answer</button>
+      </div>
+      <div id="ncl-quiz-feedback"></div>
+      <div id="ncl-quiz-hint" class="hidden"></div>
+      <div id="ncl-score-display"></div>
+      <div id="ncl-answer-display"></div>
+
+      <button class="hidden" id="ncl-generateBtn" onclick="nclGenerateProblem()">Generate New Vector</button>
+    </div>
+
+    
+  
+    </div>
+
+    <!-- Nodal Displacement Vector -->
+    <div class="p3-tab-content" id="p3-tab-ndv">
+
+    <p class="subtitle">
+      <strong>X</strong> and <strong>X&prime;</strong> are nodal coordinate vectors in x-y-z space before and after
+      deformation.
+    </p>
+
+    <div class="interactive-demo">
+      <div id="ndv-vectors-display"></div>
+
+      <div id="ndv-quiz-section" class="hidden">
+        <p class="quiz-label" id="ndv-quiz-prompt"></p>
+        <div id="ndv-quiz-inputs"></div>
+        <button id="ndv-quizCheckBtn" onclick="ndvCheckQuiz()">Check Answer</button>
+      </div>
+      <div id="ndv-quiz-feedback"></div>
+      <div id="ndv-quiz-hint" class="hidden"></div>
+      <div id="ndv-score-display"></div>
+
+      <div id="ndv-result-display"></div>
+      <div class="ndv-calculation-steps" id="ndv-calculation-steps"></div>
+
+      <button class="hidden" id="ndv-generateBtn" onclick="ndvGenerateProblem()">Generate New Vectors</button>
+    </div>
+
+    
+  
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+  
+    </div>
+
+    <script>
+
+      // ── Homework-level score aggregation & main tab switching ──
+      let p1Total = 0
+      let p2Total = 0
+      let p3Total = 0
+
+      // Controls whether the "Instructor tools" toggle is shown on the
+      // Summary tab. Only shown when iGrade is not equal to 0.
+      let iGrade = 0
+      document.getElementById('instructor-toggle-link').classList.toggle('hidden', iGrade === 0)
+
+      // Baseline restored from a legacy (lump-total, no breakdown) submission
+      // code — see resumeFromCode(). Full-breakdown codes restore each
+      // sub-tab directly instead and leave this at 0, so nothing is
+      // double-counted.
+      window.resumeBaselineScore = 0
+
+      // Shared clamp helper, used here and by the coded-score module so
+      // scores can never render as negative or exceed their known max.
+      window.hwClamp = function (v, lo, hi) {
+        v = Number(v)
+        if (!isFinite(v)) v = 0
+        return Math.max(lo, Math.min(hi, v))
+      }
+
+      const HOMEWORK_GRAND_MAX = 44
+      const P1_MAX = 12
+      const P2_MAX = 20
+      const P3_MAX = 12
+
+      function updateGrandTotal() {
+        const baseline = window.hwClamp(window.resumeBaselineScore || 0, 0, HOMEWORK_GRAND_MAX)
+        const p1c = window.hwClamp(p1Total, 0, P1_MAX)
+        const p2c = window.hwClamp(p2Total, 0, P2_MAX)
+        const p3c = window.hwClamp(p3Total, 0, P3_MAX)
+        const total = window.hwClamp(baseline + p1c + p2c + p3c, 0, HOMEWORK_GRAND_MAX)
+        document.getElementById('grand-total').textContent = total.toFixed(1)
+        document.getElementById('summary-p1-score').textContent = p1c.toFixed(1)
+        document.getElementById('summary-p2-score').textContent = p2c.toFixed(1)
+        document.getElementById('summary-p3-score').textContent = p3c.toFixed(1)
+        const baselineRow = document.getElementById('summary-baseline-row')
+        if (baseline > 0) {
+          baselineRow.classList.remove('hidden')
+          document.getElementById('summary-baseline-score').textContent = baseline.toFixed(1)
+        } else {
+          baselineRow.classList.add('hidden')
+        }
+      }
+
+      window.reportP1Total = function (t) { p1Total = t; updateGrandTotal() }
+      window.reportP2Total = function (t) { p2Total = t; updateGrandTotal() }
+      window.reportP3Total = function (t) { p3Total = t; updateGrandTotal() }
+
+      function switchMainTab(name) {
+        document.querySelectorAll('.main-tab-content').forEach(el => el.classList.remove('active'))
+        document.querySelectorAll('#main-tab-bar button').forEach(el => el.classList.remove('active'))
+        document.getElementById('main-tab-' + name).classList.add('active')
+        const idx = { summary: 0, p1: 1, p2: 2, p3: 3 }[name]
+        document.querySelectorAll('#main-tab-bar button')[idx].classList.add('active')
+      }
+
+    </script>
+
+    <script>
+      // ═══════════════════════════════════════════
+      //  LIGHTWEIGHT "CODED SCORE" GENERATOR / DECODER
+      //  No LTI / admin setup required — students paste
+      //  the generated code into a Canvas text-entry
+      //  assignment; instructors decode it below (or on
+      //  their own copy of this file) to enter grades.
+      // ═══════════════════════════════════════════
+      (function () {
+        const HOMEWORK_ID = "HW1"
+        const HOMEWORK_MAX = 44
+        const CODE_LIFETIME_MS = 14 * 24 * 60 * 60 * 1000 // 14 days
+
+        // Obfuscation salt only — NOT cryptographic security in the sense of
+        // being secret (it's sitting right here in the page source). Its job
+        // is to make casual hand-editing of a code detectable, not to resist
+        // a determined attacker who has read this file.
+        const SALT = "fem-hw1-2026-v1"
+
+        // ── Legacy checksum (kept only to verify codes generated by older
+        // versions of this page — new codes use SHA-256 below) ──
+        function simpleHash(str) {
+          let h = 0
+          for (let i = 0; i < str.length; i++) {
+            h = (Math.imul(31, h) + str.charCodeAt(i)) | 0
+          }
+          return (h >>> 0).toString(36).toUpperCase()
+        }
+
+        // ── Current checksum: SHA-256 via the browser's Web Crypto API,
+        // truncated to 12 hex characters. Async by nature, so code
+        // generation and decoding are both async functions below. ──
+        async function sha256Hex(str) {
+          const bytes = new TextEncoder().encode(str)
+          const digest = await crypto.subtle.digest("SHA-256", bytes)
+          return Array.from(new Uint8Array(digest))
+            .map(b => b.toString(16).padStart(2, "0"))
+            .join("")
+        }
+
+        function sanitize(field) {
+          return String(field).replace(/[|~]/g, " ").trim()
+        }
+
+        function b64EncodeUnicode(str) {
+          return btoa(unescape(encodeURIComponent(str)))
+        }
+        function b64DecodeUnicode(str) {
+          return decodeURIComponent(escape(atob(str)))
+        }
+
+        // Sub-tab keys for each problem, in the fixed order they're packed
+        // into the code. Keep these in sync with the tabScores objects in
+        // each problem's own <script> block.
+        const P1_KEYS = ["sum", "diff", "scalar", "combo"]
+        const P2_KEYS = ["sum", "diff", "prod", "trans", "scalar"]
+        const P3_KEYS = ["pad", "ncv", "ncl", "ndv"]
+
+        // Shared clamp helper — falls back locally if the aggregation
+        // script (which defines window.hwClamp) hasn't loaded for some reason.
+        function clamp(v, lo, hi) {
+          return window.hwClamp ? window.hwClamp(v, lo, hi) : Math.max(lo, Math.min(hi, Number(v) || 0))
+        }
+
+        function csvFromScores(getterName, keys, max) {
+          const getter = window[getterName]
+          const scores = typeof getter === "function" ? getter() : {}
+          return keys.map(k => clamp(scores[k] || 0, 0, max).toFixed(1)).join(",")
+        }
+
+        function zipKeysClamped(keys, values) {
+          const obj = {}
+          keys.forEach((k, i) => { obj[k] = clamp(values[i] || 0, 0, Infinity) })
+          return obj
+        }
+
+        window.generateSubmissionCode = async function () {
+          const nameEl = document.getElementById("student-name-input")
+          const idEl = document.getElementById("student-id-input")
+          const warnEl = document.getElementById("code-warning-msg")
+          const name = sanitize(nameEl.value)
+          const id = sanitize(idEl.value)
+
+          if (!name || !id) {
+            warnEl.style.color = ""
+            warnEl.textContent = "Please enter both your name and your Canvas login/ID before generating a code."
+            warnEl.classList.remove("hidden")
+            document.getElementById("code-output-row").classList.add("hidden")
+            return
+          }
+          warnEl.classList.add("hidden")
+
+          const scoreText = document.getElementById("grand-total").textContent
+          const score = clamp(parseFloat(scoreText) || 0, 0, HOMEWORK_MAX)
+
+          if (score === 0) {
+            const proceed = confirm(
+              "Your total score is currently 0.0 — you haven't answered anything yet. " +
+              "Generate a submission code anyway?"
+            )
+            if (!proceed) return
+          }
+
+          // Pack each problem's per-sub-tab breakdown alongside the grand
+          // total and a generation timestamp, so a resumed session restores
+          // exactly where each individual sub-tab left off and so the code
+          // can expire after 14 days.
+          const p1csv = csvFromScores("p1GetTabScores", P1_KEYS, 12)
+          const p2csv = csvFromScores("p2GetTabScores", P2_KEYS, 20)
+          const p3csv = csvFromScores("p3GetTabScores", P3_KEYS, 12)
+          const timestamp = Date.now()
+
+          const payload = `${name}|${id}|${p1csv}|${p2csv}|${p3csv}|${HOMEWORK_MAX}|${score.toFixed(1)}|${timestamp}`
+          const encodedPayload = b64EncodeUnicode(payload)
+          const digest = await sha256Hex(payload + "|" + SALT)
+          const checksum = digest.slice(0, 12)
+          const code = `${HOMEWORK_ID}-${encodedPayload}-${checksum}`
+
+          document.getElementById("submission-code-output").value = code
+          document.getElementById("code-output-row").classList.remove("hidden")
+          document.getElementById("code-score-snapshot").textContent = score.toFixed(1)
+          updatePrintHeader(name, id)
+
+          const copied = await attemptCopyToClipboard(code)
+          document.getElementById("confirm-name").textContent = name
+          document.getElementById("confirm-id").textContent = id
+          document.getElementById("confirm-score").textContent = `${score.toFixed(1)} / ${HOMEWORK_MAX}`
+          document.getElementById("confirm-datetime").textContent = new Date(timestamp).toLocaleString()
+          const copyStatusEl = document.getElementById("confirm-copy-status")
+          if (copied) {
+            copyStatusEl.textContent = "\u2713 Code copied to clipboard."
+            copyStatusEl.className = "copy-status copied"
+          } else {
+            copyStatusEl.textContent = "Code generated \u2014 click \"Copy\" above, then paste it into Canvas."
+            copyStatusEl.className = "copy-status manual"
+          }
+          document.getElementById("code-confirmation").classList.remove("hidden")
+
+          // Once a code has been generated, the identity it was generated
+          // for is locked in — this keeps a single session tied to one
+          // student even across multiple regenerated codes as their score improves.
+          if (!nameEl.readOnly) lockIdentityFields()
+        }
+
+        // Shared clipboard helper used both for the auto-copy right after
+        // generating a code and for the manual "Copy" button. Falls back to
+        // document.execCommand("copy") in browsers/contexts where the
+        // async Clipboard API isn't available or permission is denied.
+        async function attemptCopyToClipboard(text) {
+          const output = document.getElementById("submission-code-output")
+          output.select()
+          output.setSelectionRange(0, 99999)
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            try {
+              await navigator.clipboard.writeText(text)
+              return true
+            } catch (e) {
+              try { return document.execCommand("copy") } catch (e2) { return false }
+            }
+          }
+          try { return document.execCommand("copy") } catch (e) { return false }
+        }
+
+        window.copySubmissionCode = async function () {
+          const output = document.getElementById("submission-code-output")
+          const copied = await attemptCopyToClipboard(output.value)
+          const copyStatusEl = document.getElementById("confirm-copy-status")
+          if (copyStatusEl && !document.getElementById("code-confirmation").classList.contains("hidden")) {
+            if (copied) {
+              copyStatusEl.textContent = "\u2713 Code copied to clipboard."
+              copyStatusEl.className = "copy-status copied"
+            } else {
+              copyStatusEl.textContent = "Could not copy automatically \u2014 select the code above and copy it manually."
+              copyStatusEl.className = "copy-status manual"
+            }
+          }
+        }
+
+        function lockIdentityFields() {
+          const nameEl = document.getElementById("student-name-input")
+          const idEl = document.getElementById("student-id-input")
+          nameEl.readOnly = true
+          idEl.readOnly = true
+          nameEl.classList.add("locked")
+          idEl.classList.add("locked")
+          document.getElementById("identity-locked-note").classList.remove("hidden")
+        }
+
+        function updatePrintHeader(name, id) {
+          const nameSpan = document.getElementById("print-header-name")
+          const idSpan = document.getElementById("print-header-id")
+          if (nameSpan) nameSpan.textContent = name || ""
+          if (idSpan) idSpan.textContent = id || ""
+        }
+
+        window.printSummary = function () {
+          const nameEl = document.getElementById("student-name-input")
+          const idEl = document.getElementById("student-id-input")
+          updatePrintHeader(nameEl ? nameEl.value : "", idEl ? idEl.value : "")
+          const dateSpan = document.getElementById("print-header-date")
+          if (dateSpan) dateSpan.textContent = new Date().toLocaleString()
+          window.print()
+        }
+
+        window.unlockIdentityAndReset = function () {
+          const sure = confirm(
+            "This unlocks your name/ID fields and completely resets your progress on this " +
+            "page — every sub-tab starts over from scratch, as if you'd just opened it fresh. " +
+            "This can't be undone (unless you have a code saved to resume from). Continue?"
+          )
+          if (!sure) return
+          location.reload()
+        }
+
+        window.resumeFromCode = async function () {
+          const codeInput = document.getElementById("resume-code-input")
+          const warnEl = document.getElementById("resume-warning-msg")
+          const nameEl = document.getElementById("student-name-input")
+          const idEl = document.getElementById("student-id-input")
+
+          if (nameEl.readOnly) {
+            warnEl.textContent = "Your name and ID are already locked for this session. Use \"Unlock Identity / Start Over\" below to resume with a different code."
+            warnEl.classList.remove("hidden")
+            return
+          }
+
+          const decoded = await decodeOneCode(codeInput.value.trim())
+          if (!decoded || decoded.error) {
+            warnEl.textContent = decoded ? decoded.error : "That doesn't look like a valid code. Check that you copied it in full."
+            warnEl.classList.remove("hidden")
+            return
+          }
+          if (!decoded.valid) {
+            warnEl.textContent = "This code failed verification (checksum mismatch) and can't be used to resume. Paste it exactly as it was generated, or contact your instructor."
+            warnEl.classList.remove("hidden")
+            return
+          }
+          if (decoded.expired) {
+            warnEl.textContent = "This code has expired (codes are valid for 14 days after they're generated). Please contact your instructor if you need to resume old progress."
+            warnEl.classList.remove("hidden")
+            return
+          }
+          if (String(decoded.max) !== String(HOMEWORK_MAX)) {
+            warnEl.textContent = `This code was generated for a different version of the assignment (max ${decoded.max}, current max ${HOMEWORK_MAX}) and can't be used to resume here.`
+            warnEl.classList.remove("hidden")
+            return
+          }
+
+          warnEl.classList.add("hidden")
+          nameEl.value = decoded.name
+          idEl.value = decoded.id
+          updatePrintHeader(decoded.name, decoded.id)
+
+          if (decoded.breakdown) {
+            // Full per-sub-tab restore: each problem's tab scores are set
+            // directly, so p1Total/p2Total/p3Total (and the grand total)
+            // come out exactly right with no separate baseline needed —
+            // nothing is double-counted.
+            window.resumeBaselineScore = 0
+            if (window.p1SetTabScores) window.p1SetTabScores(decoded.breakdown.p1)
+            if (window.p2SetTabScores) window.p2SetTabScores(decoded.breakdown.p2)
+            if (window.p3SetTabScores) window.p3SetTabScores(decoded.breakdown.p3)
+          } else {
+            // Older code format with only a lump total (no breakdown) —
+            // fall back to carrying it over as a flat baseline, shown as
+            // its own row on the Summary tab until it's no longer needed.
+            window.resumeBaselineScore = clamp(parseFloat(decoded.score) || 0, 0, HOMEWORK_MAX)
+            if (typeof updateGrandTotal === "function") updateGrandTotal()
+          }
+
+          lockIdentityFields()
+
+          const noteEl = document.getElementById("code-warning-msg")
+          noteEl.classList.remove("hidden")
+          noteEl.style.color = "#1565c0"
+          const startScore = clamp(parseFloat(decoded.score) || 0, 0, HOMEWORK_MAX)
+          noteEl.textContent = `Resumed as ${decoded.name} with a restored score of ${startScore.toFixed(1)} / ${decoded.max}. ` +
+            `Any new work you do now adds on top of that restored total — generate a new code when you're done.`
+        }
+
+        window.toggleInstructorPanel = function () {
+          document.getElementById("instructor-panel").classList.toggle("open")
+        }
+
+        // Decodes one submission code. Handles three payload shapes for
+        // backward compatibility:
+        //   8 fields: name|id|p1csv|p2csv|p3csv|max|score|timestamp   (current)
+        //   7 fields: name|id|p1csv|p2csv|p3csv|max|score             (no expiry)
+        //   4 fields: name|id|score|max                               (oldest, lump total)
+        // and two checksum schemes, told apart by length: a 12-hex-char
+        // checksum is SHA-256 (current); anything else is the legacy
+        // simpleHash scheme used by very old codes.
+        async function decodeOneCode(rawLine) {
+          const match = rawLine.match(/HW\d*-[A-Za-z0-9+/=]+-[A-Za-z0-9]+/)
+          if (!match) return null
+          const parts = match[0].split("-")
+          if (parts.length !== 3) return null
+          const [prefix, encodedPayload, checksum] = parts
+          let payload
+          try {
+            payload = b64DecodeUnicode(encodedPayload)
+          } catch (e) {
+            return { raw: rawLine, error: "Could not decode (malformed code)." }
+          }
+          const fields = payload.split("|")
+
+          let valid, scheme
+          if (/^[0-9a-f]{12}$/i.test(checksum)) {
+            scheme = "sha256"
+            const digest = await sha256Hex(payload + "|" + SALT)
+            valid = digest.slice(0, 12).toLowerCase() === checksum.toLowerCase()
+          } else {
+            scheme = "legacy"
+            const expected = simpleHash(payload + "|" + SALT).slice(0, 6)
+            valid = expected === checksum
+          }
+
+          if (fields.length === 8) {
+            const [name, id, p1csv, p2csv, p3csv, max, score, timestampStr] = fields
+            const breakdown = {
+              p1: zipKeysClamped(P1_KEYS, p1csv.split(",").map(Number)),
+              p2: zipKeysClamped(P2_KEYS, p2csv.split(",").map(Number)),
+              p3: zipKeysClamped(P3_KEYS, p3csv.split(",").map(Number)),
+            }
+            const timestamp = parseInt(timestampStr, 10)
+            const hasTimestamp = isFinite(timestamp)
+            const expired = hasTimestamp && (Date.now() - timestamp > CODE_LIFETIME_MS)
+            return { raw: rawLine, prefix, name, id, score, max, valid, breakdown, timestamp: hasTimestamp ? timestamp : null, expired, scheme }
+          }
+          if (fields.length === 7) {
+            const [name, id, p1csv, p2csv, p3csv, max, score] = fields
+            const breakdown = {
+              p1: zipKeysClamped(P1_KEYS, p1csv.split(",").map(Number)),
+              p2: zipKeysClamped(P2_KEYS, p2csv.split(",").map(Number)),
+              p3: zipKeysClamped(P3_KEYS, p3csv.split(",").map(Number)),
+            }
+            // No timestamp in this older format — treat as never-expiring
+            // rather than guessing, since we have no generation date.
+            return { raw: rawLine, prefix, name, id, score, max, valid, breakdown, timestamp: null, expired: false, scheme }
+          }
+          if (fields.length === 4) {
+            const [name, id, score, max] = fields
+            return { raw: rawLine, prefix, name, id, score, max, valid, timestamp: null, expired: false, scheme }
+          }
+          return { raw: rawLine, error: "Could not decode (malformed payload)." }
+        }
+
+        function formatBreakdownRow(label, obj, max) {
+          const total = Object.values(obj).reduce((a, b) => a + b, 0)
+          const parts = Object.entries(obj).map(([k, v]) => `${k}: ${v.toFixed(1)}`).join(", ")
+          return `<div class="breakdown-row"><strong>${label} (${total.toFixed(1)} / ${max}):</strong> ${parts}</div>`
+        }
+
+        window.decodeSubmissionCodes = async function () {
+          const input = document.getElementById("decode-input").value
+          const lines = input.split("\n").map(l => l.trim()).filter(Boolean)
+          const resultsEl = document.getElementById("decode-results")
+
+          if (lines.length === 0) {
+            resultsEl.innerHTML = '<p class="code-warning">Paste at least one code above.</p>'
+            return
+          }
+
+          resultsEl.innerHTML = '<p class="code-note">Decoding\u2026</p>'
+          const decoded = await Promise.all(lines.map(decodeOneCode))
+
+          let html = ""
+
+          decoded.forEach(d => {
+            if (!d || d.error) {
+              html += `<div class="decode-card invalid"><p class="code-warning">${d ? d.error : "Not a recognized code"}: "${(d ? d.raw : "").replace(/</g, "&lt;")}"</p></div>`
+              return
+            }
+
+            let statusClass, statusText
+            if (!d.valid) { statusClass = "invalid"; statusText = "Invalid / Tampered" }
+            else if (d.expired) { statusClass = "expired"; statusText = "Expired" }
+            else { statusClass = "valid"; statusText = "Valid" }
+
+            const pct = ((parseFloat(d.score) / parseFloat(d.max)) * 100).toFixed(1)
+            const generatedText = d.timestamp ? new Date(d.timestamp).toLocaleString() : "Not recorded (older code format, no expiration)"
+            const expiresText = d.timestamp ? new Date(d.timestamp + CODE_LIFETIME_MS).toLocaleString() : "N/A \u2014 expiration not enabled for this code"
+
+            let breakdownHtml
+            if (d.breakdown) {
+              breakdownHtml = formatBreakdownRow("Problem 1", d.breakdown.p1, 12) +
+                formatBreakdownRow("Problem 2", d.breakdown.p2, 20) +
+                formatBreakdownRow("Problem 3", d.breakdown.p3, 12)
+            } else {
+              breakdownHtml = '<div class="breakdown-row">Not available \u2014 this is an older lump-total code with no per-problem breakdown.</div>'
+            }
+
+            html += `
+              <div class="decode-card ${statusClass}">
+                <div class="decode-card-header">
+                  <span class="decode-name">${d.name}</span>
+                  <span class="decode-status-badge ${statusClass}">${statusText}</span>
+                </div>
+                <table class="decode-info-table">
+                  <tr><td class="label">ID / Login:</td><td>${d.id}</td></tr>
+                  <tr><td class="label">Total Score:</td><td>${parseFloat(d.score).toFixed(1)} / ${d.max} (${pct}%)</td></tr>
+                  <tr><td class="label">Generated:</td><td>${generatedText}</td></tr>
+                  <tr><td class="label">Expires:</td><td>${expiresText}</td></tr>
+                </table>
+                <div class="decode-breakdown">${breakdownHtml}</div>
+              </div>`
+          })
+
+          html += '<p class="code-note">"Invalid / Tampered" codes have a checksum that doesn\'t match the payload \u2014 they may have been hand-edited. "Expired" codes are older than the 14-day validity window. Review both before entering a grade.</p>'
+          resultsEl.innerHTML = html
+
+          window._decodedRecords = decoded.filter(d => d && !d.error)
+          document.getElementById("csv-step").classList.toggle("hidden", window._decodedRecords.length === 0)
+        }
+
+        // ── CSV parsing (handles quoted fields with commas/newlines) ──
+        function parseCSV(text) {
+          const rows = []
+          let row = [], field = "", inQuotes = false
+          for (let i = 0; i < text.length; i++) {
+            const c = text[i]
+            if (inQuotes) {
+              if (c === '"') {
+                if (text[i + 1] === '"') { field += '"'; i++ }
+                else { inQuotes = false }
+              } else { field += c }
+            } else {
+              if (c === '"') { inQuotes = true }
+              else if (c === ",") { row.push(field); field = "" }
+              else if (c === "\r") { /* skip */ }
+              else if (c === "\n") { row.push(field); rows.push(row); row = []; field = "" }
+              else { field += c }
+            }
+          }
+          if (field.length > 0 || row.length > 0) { row.push(field); rows.push(row) }
+          return rows.filter(r => !(r.length === 1 && r[0] === ""))
+        }
+
+        function unparseCSV(rows) {
+          return rows.map(row => row.map(field => {
+            const f = field == null ? "" : String(field)
+            return /[",\n]/.test(f) ? '"' + f.replace(/"/g, '""') + '"' : f
+          }).join(",")).join("\r\n")
+        }
+
+        function downloadTextFile(text, filename, mime) {
+          const blob = new Blob([text], { type: mime })
+          const url = URL.createObjectURL(blob)
+          const a = document.createElement("a")
+          a.href = url; a.download = filename
+          document.body.appendChild(a); a.click(); document.body.removeChild(a)
+          URL.revokeObjectURL(url)
+        }
+
+        function normalizeName(n) {
+          return n.toLowerCase().replace(/[^a-z\s]/g, " ").split(/\s+/).filter(Boolean).sort().join(" ")
+        }
+
+        window.handleGradebookCsvUpload = function (event) {
+          const file = event.target.files[0]
+          const summaryEl = document.getElementById("csv-match-summary")
+          if (!file) return
+          const reader = new FileReader()
+          reader.onload = function (e) {
+            const rows = parseCSV(e.target.result)
+            if (rows.length < 2) {
+              summaryEl.innerHTML = '<p class="code-warning">Could not read this CSV (too few rows).</p>'
+              return
+            }
+            // Keep a pristine, never-mutated copy so re-running "Fill Scores"
+            // (e.g. after switching overwrite mode) always starts from the
+            // original upload rather than a previous run's output.
+            window._gradebookCsvOriginal = { header: rows[0], rows: rows.slice(1) }
+            const excludeExact = ["student", "id", "sis user id", "sis login id", "section", "root account", "integration id"]
+            const excludeContains = ["current score", "final score", "current grade", "final grade", "unposted"]
+            const select = document.getElementById("csv-assignment-column")
+            select.innerHTML = ""
+            rows[0].forEach((h, idx) => {
+              const hl = h.trim().toLowerCase()
+              if (excludeExact.includes(hl)) return
+              if (excludeContains.some(x => hl.includes(x))) return
+              const opt = document.createElement("option")
+              opt.value = idx; opt.textContent = h
+              select.appendChild(opt)
+            })
+            document.getElementById("csv-column-picker").classList.remove("hidden")
+            summaryEl.innerHTML = ""
+          }
+          reader.readAsText(file)
+        }
+
+        window.fillGradebookCsv = function () {
+          const decoded = window._decodedRecords || []
+          const summaryEl = document.getElementById("csv-match-summary")
+          const original = window._gradebookCsvOriginal
+          if (decoded.length === 0) {
+            summaryEl.innerHTML = '<p class="code-warning">Decode some codes in Step 1 first.</p>'
+            return
+          }
+          if (!original) {
+            summaryEl.innerHTML = '<p class="code-warning">Upload a gradebook CSV first.</p>'
+            return
+          }
+
+          const modeInput = document.querySelector('input[name="csv-fill-mode"]:checked')
+          const mode = modeInput ? modeInput.value : "overwrite"
+
+          // Always work on a fresh clone of the pristine upload, so running
+          // "Fill Scores" more than once (e.g. to compare overwrite vs.
+          // blank-only) is safe and never compounds on a prior run.
+          const header = original.header.slice()
+          const rows = original.rows.map(row => row.slice())
+
+          const colIdx = parseInt(document.getElementById("csv-assignment-column").value, 10)
+          const headerLower = header.map(h => h.trim().toLowerCase())
+          const idColCandidates = [
+            "sis login id", "sis user id", "id", "email", "email address",
+            "login id", "login", "username", "canvas id",
+          ]
+          const idColIdxs = []
+          idColCandidates.forEach(name => {
+            const i = headerLower.indexOf(name)
+            if (i !== -1) idColIdxs.push(i)
+          })
+          const studentColIdx = headerLower.indexOf("student")
+
+          const matched = [], skipped = [], mismatched = [], expiredList = [], unmatched = []
+
+          decoded.forEach(d => {
+            if (d.expired) {
+              expiredList.push(d.name)
+              return
+            }
+            let matchedRow = null
+            for (const row of rows) {
+              for (const ci of idColIdxs) {
+                if (row[ci] && row[ci].trim().toLowerCase() === d.id.trim().toLowerCase()) { matchedRow = row; break }
+              }
+              if (matchedRow) break
+            }
+            if (!matchedRow && studentColIdx !== -1) {
+              const target = normalizeName(d.name)
+              for (const row of rows) {
+                if (row[studentColIdx] && normalizeName(row[studentColIdx]) === target) { matchedRow = row; break }
+              }
+            }
+            if (!matchedRow) {
+              unmatched.push(d.name)
+              return
+            }
+            const existing = matchedRow[colIdx]
+            if (mode === "blank" && existing && String(existing).trim() !== "") {
+              skipped.push(d.name)
+              return
+            }
+            matchedRow[colIdx] = d.score
+            matched.push(d.name)
+            if (!d.valid) mismatched.push(d.name)
+          })
+
+          const csvText = unparseCSV([header, ...rows])
+          downloadTextFile(csvText, "gradebook_updated.csv", "text/csv")
+
+          const modeLabel = mode === "blank" ? "only blank cells" : "overwriting existing scores"
+          let summary = `<p class="code-note">Mode: <strong>${modeLabel}</strong>. ` +
+            `Filled <strong>${matched.length}</strong> of ${decoded.length} decoded score(s) into "${header[colIdx]}." ` +
+            `A file named <strong>gradebook_updated.csv</strong> has been downloaded \u2014 re-upload it via Canvas Grades &rarr; Import.</p>`
+          summary += '<ul class="csv-summary-list">'
+          summary += `<li>Matched &amp; filled: ${matched.length}</li>`
+          if (skipped.length) summary += `<li>Skipped (already had a value, blank-only mode): ${skipped.length} \u2014 ${skipped.join(", ")}</li>`
+          if (mismatched.length) summary += `<li>Filled but checksum MISMATCH (verify manually): ${mismatched.length} \u2014 ${mismatched.join(", ")}</li>`
+          if (expiredList.length) summary += `<li>Not filled, code EXPIRED: ${expiredList.length} \u2014 ${expiredList.join(", ")}</li>`
+          if (unmatched.length) summary += `<li>Could not auto-match (enter manually): ${unmatched.length} \u2014 ${unmatched.join(", ")}</li>`
+          summary += '</ul>'
+          summaryEl.innerHTML = summary
+        }
+      })();
+    </script>
+
+    <script>
+      (function () {
+
+
+      window.p3SwitchTab = function (name) {
+        document.querySelectorAll('.p3-tab-content').forEach(el => el.classList.remove('active'))
+        document.querySelectorAll('#p3-topbar button').forEach(el => el.classList.remove('active'))
+        document.getElementById('p3-tab-' + name).classList.add('active')
+        const idx = { pad: 0, ncv: 1, ncl: 2, ndv: 3 }[name]
+        document.querySelectorAll('#p3-topbar button')[idx].classList.add('active')
+      }
+
+      const tabScores = { pad: 0, ncv: 0, ncl: 0, ndv: 0 }
+      function updateTotalScore() {
+        const raw = tabScores.pad + tabScores.ncv + tabScores.ncl + tabScores.ndv
+        const total = window.hwClamp ? window.hwClamp(raw, 0, 12) : Math.max(0, Math.min(12, raw))
+        document.getElementById("p3-total-score").textContent = total.toFixed(1)
+        if (window.reportP3Total) window.reportP3Total(total)
+      }
+      window.p3ReportTabScore = function (key, score) {
+        tabScores[key] = Math.max(0, Number(score) || 0)
+        updateTotalScore()
+      }
+      window.p3GetTabScores = function () { return Object.assign({}, tabScores) };
+      window.p3SetTabScores = function (scores) {
+        Object.keys(tabScores).forEach(key => {
+          if (scores[key] !== undefined) {
+            const clamped = Math.max(0, Number(scores[key]) || 0)
+            tabScores[key] = clamped
+            const el = document.getElementById(`${key}-score-display`)
+            if (el) el.textContent = `Score: ${clamped.toFixed(1)}`
+          }
+        })
+        updateTotalScore()
+      };
+
+    
+      })();
+    </script>
+
+    <script>
+      (function () {
+
+      (function () {
+
+      let a, b, c, d
+      let finalX, finalY
+      // Hidden quiz variables
+      var nScore = 0, nProblems = 3, nYes = 0.5, nAns = 0.5
+
+      const padGenerateBtn = document.getElementById("pad-generateBtn")
+      const diagramSection = document.getElementById("pad-diagram-section")
+
+      // Random integer between min and max, inclusive
+      function randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min
+      }
+
+      // helper to format negative numbers in parentheses, matching vectorOperations.html style
+      const formatInput = n => (n < 0 ? `(${n})` : n)
+
+      window.padGenerateProblem = function () {
+        a = randomInt(-10, 10)
+        b = randomInt(-10, 10)
+        c = randomInt(-10, 10) // displacement in the x-direction
+        d = randomInt(-10, 10) // displacement in the y-direction
+
+        finalX = a + c
+        finalY = b + d
+
+        displayProblem()
+
+        // Reset state for the new round
+        document.getElementById("pad-result-display").innerHTML = ""
+        document.getElementById("pad-calculation-steps").innerHTML = ""
+        document.getElementById("pad-diagram-container").innerHTML = ""
+        diagramSection.classList.add("hidden")
+
+        padGenerateBtn.classList.add("hidden")
+        document.getElementById("pad-quiz-section").classList.add("hidden")
+        document.getElementById("pad-quiz-feedback").innerHTML = ""
+        document.getElementById("pad-quiz-hint").classList.add("hidden")
+
+        showQuizSection()
+      }
+
+      function displayProblem() {
+        const subtitle = document.getElementById("pad-problem-subtitle")
+        subtitle.innerHTML = `
+                A point initially had coordinates (${a}, ${b}) in the x-y plane. It was displaced by ${c} units in the
+                x-direction and ${d} units in the y-direction. Determine the position vector of the point after the
+                displacement.
+            `
+
+        const problemStatement = document.getElementById("pad-problem-statement")
+        problemStatement.innerHTML = `
+                <p>Initial position vector: <strong>P</strong> = {${a}, ${b}}<sup>T</sup></p>
+                <p>Displacement vector: <strong>u</strong> = {${c}, ${d}}<sup>T</sup></p>
+                <p>Find the position vector <strong>P&prime;</strong> after the displacement.</p>
+            `
+      }
+
+      // Maps a data coordinate (range roughly -12 to 12) to SVG pixel coordinates
+      function toSvgPoint(x, y) {
+        const viewSize = 500
+        const dataRange = 12 // data coordinates run from -12 to 12
+        const scale = viewSize / (2 * dataRange)
+        const originPx = viewSize / 2
+        return {
+          x: originPx + x * scale,
+          y: originPx - y * scale // flip y so positive is up
+        }
+      }
+
+      function showDiagram() {
+        const container = document.getElementById("pad-diagram-container")
+
+        const O = toSvgPoint(0, 0)
+        const P = toSvgPoint(a, b)
+        const Pp = toSvgPoint(finalX, finalY)
+        const Q = toSvgPoint(c, d) // displacement vector redrawn starting from the origin
+
+        const viewSize = 500
+        const dataRange = 12
+        const scale = viewSize / (2 * dataRange)
+        const axisMaxPx = dataRange * scale
+
+        const svg = `
+                <svg viewBox="0 0 ${viewSize} ${viewSize}" xmlns="http://www.w3.org/2000/svg" style="max-width: 500px; width: 100%;">
+                    <defs>
+                        <marker id="pad-arrowGray" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+                            <path d="M0,0 L0,6 L8,3 z" fill="#9e9e9e" />
+                        </marker>
+                        <marker id="pad-arrowBlue" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+                            <path d="M0,0 L0,6 L8,3 z" fill="#1565c0" />
+                        </marker>
+                        <marker id="pad-arrowRed" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+                            <path d="M0,0 L0,6 L8,3 z" fill="#c0392b" />
+                        </marker>
+                        <marker id="pad-arrowRedDotted" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+                            <path d="M0,0 L0,6 L8,3 z" fill="#e74c3c" />
+                        </marker>
+                        <marker id="pad-arrowAxis" markerWidth="8" markerHeight="8" refX="5" refY="2.5" orient="auto" markerUnits="strokeWidth">
+                            <path d="M0,0 L0,5 L6,2.5 z" fill="#bbb" />
+                        </marker>
+                    </defs>
+
+                    <!-- Axes -->
+                    <line x1="${O.x - axisMaxPx}" y1="${O.y}" x2="${O.x + axisMaxPx}" y2="${O.y}" stroke="#bbb" stroke-width="1.5" marker-end="url(#pad-arrowAxis)" />
+                    <line x1="${O.x}" y1="${O.y + axisMaxPx}" x2="${O.x}" y2="${O.y - axisMaxPx}" stroke="#bbb" stroke-width="1.5" marker-end="url(#pad-arrowAxis)" />
+                    <text x="${O.x + axisMaxPx - 10}" y="${O.y - 8}" font-size="14" fill="#888">x</text>
+                    <text x="${O.x + 8}" y="${O.y - axisMaxPx + 12}" font-size="14" fill="#888">y</text>
+
+                    <!-- Initial position vector to P -->
+                    <line x1="${O.x}" y1="${O.y}" x2="${P.x}" y2="${P.y}" stroke="#9e9e9e" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#pad-arrowGray)" />
+
+                    <!-- Final position vector to P' -->
+                    <line x1="${O.x}" y1="${O.y}" x2="${Pp.x}" y2="${Pp.y}" stroke="#1565c0" stroke-width="2.5" marker-end="url(#pad-arrowBlue)" />
+
+                    <!-- Displacement vector from P to P' -->
+                    <line x1="${P.x}" y1="${P.y}" x2="${Pp.x}" y2="${Pp.y}" stroke="#c0392b" stroke-width="3" marker-end="url(#pad-arrowRed)" />
+
+                    <!-- Displacement vector redrawn starting from the origin -->
+                    <line x1="${O.x}" y1="${O.y}" x2="${Q.x}" y2="${Q.y}" stroke="#e74c3c" stroke-width="2.5" stroke-dasharray="2,3" marker-end="url(#pad-arrowRedDotted)" />
+
+                    <!-- Points -->
+                    <circle cx="${P.x}" cy="${P.y}" r="4" fill="#2c3e50" />
+                    <circle cx="${Pp.x}" cy="${Pp.y}" r="4" fill="#1565c0" />
+                    <circle cx="${O.x}" cy="${O.y}" r="3" fill="#2c3e50" />
+                    <circle cx="${Q.x}" cy="${Q.y}" r="4" fill="#e74c3c" />
+
+                    <!-- Labels -->
+                    <text x="${P.x + 8}" y="${P.y - 8}" font-size="14" font-weight="bold" fill="#2c3e50">P(${a}, ${b})</text>
+                    <text x="${Pp.x + 8}" y="${Pp.y - 8}" font-size="14" font-weight="bold" fill="#1565c0">P&prime;(${finalX}, ${finalY})</text>
+                    <text x="${(P.x + Pp.x) / 2 + 8}" y="${(P.y + Pp.y) / 2 - 8}" font-size="14" font-weight="bold" fill="#c0392b">u</text>
+                    <text x="${Q.x + 8}" y="${Q.y - 8}" font-size="14" font-weight="bold" fill="#e74c3c">u(${c}, ${d})</text>
+                </svg>
+            `
+
+        container.innerHTML = svg
+        diagramSection.classList.remove("hidden")
+      }
+
+      // Generate an initial problem on page load
+      padGenerateProblem()
+
+      // --- Quiz functions ---
+
+      function showQuizSection() {
+        const quizSection = document.getElementById("pad-quiz-section")
+        const quizInputs = document.getElementById("pad-quiz-inputs")
+        const quizPrompt = document.getElementById("pad-quiz-prompt")
+
+        quizPrompt.textContent = "Enter your answer for the position vector P' after the displacement:"
+        let html = '<div class="pad-quiz-input-row"><span>(</span>'
+        html += '<input type="text" id="pad-quiz-input-0" placeholder="x">'
+        html += ', '
+        html += '<input type="text" id="pad-quiz-input-1" placeholder="y">'
+        html += '<span>)</span></div>'
+        quizInputs.innerHTML = html
+
+        document.getElementById("pad-quiz-feedback").innerHTML = ""
+        document.getElementById("pad-quiz-hint").classList.add("hidden")
+        quizSection.classList.remove("hidden")
+        document.getElementById("pad-quizCheckBtn").disabled = false
+      }
+
+      window.padCheckQuiz = function () {
+        const correctArray = [finalX, finalY]
+        const quizFeedback = document.getElementById("pad-quiz-feedback")
+        const quizHint = document.getElementById("pad-quiz-hint")
+        let allCorrect = true
+        let wrongEntries = []
+        const labels = ["x", "y"]
+
+        for (let i = 0; i < 2; i++) {
+          const input = document.getElementById(`pad-quiz-input-${i}`)
+          const userVal = parseFloat(input.value)
+          const correctVal = correctArray[i]
+
+          if (userVal === correctVal) {
+            input.classList.remove("incorrect")
+            input.classList.add("correct")
+          } else {
+            input.classList.remove("correct")
+            input.classList.add("incorrect")
+            allCorrect = false
+            wrongEntries.push({ label: labels[i], your: isNaN(userVal) ? "(empty)" : userVal, correct: correctVal })
+            const span = document.createElement("span")
+            span.className = "correct-val"
+            span.textContent = `\u2192 ${correctVal}`
+            input.parentNode.appendChild(span)
+          }
+        }
+
+        if (allCorrect) {
+          quizFeedback.textContent = "All correct! Your answer is right."
+          quizFeedback.className = "correct"
+          quizHint.classList.add("hidden")
+          nScore += nAns
+        } else {
+          quizFeedback.textContent = "Some entries are incorrect."
+          quizFeedback.className = "incorrect"
+          nScore = Math.max(0, nScore - nAns)
+          let hintHtml = "<strong>Errors found:</strong><br>"
+          wrongEntries.forEach(e => {
+            hintHtml += `${e.label}-component: your answer = ${e.your}, correct = ${e.correct}<br>`
+          })
+          hintHtml += "<br><strong>Step-by-step hint:</strong><br>"
+          hintHtml += `x': ${formatInput(a)} + ${formatInput(c)} = ${finalX}<br>`
+          hintHtml += `y': ${formatInput(b)} + ${formatInput(d)} = ${finalY}`
+          quizHint.innerHTML = hintHtml
+          quizHint.classList.remove("hidden")
+        }
+
+        document.getElementById("pad-quizCheckBtn").disabled = true
+        updateScoreDisplay()
+
+        if (allCorrect && nScore < nProblems) {
+          setTimeout(() => {
+            padGenerateProblem()
+          }, 1500)
+        } else if (nScore < nProblems) {
+          padGenerateBtn.classList.remove("hidden")
+        }
+      }
+
+      function updateScoreDisplay() {
+        const scoreDisplay = document.getElementById("pad-score-display")
+        scoreDisplay.textContent = `Score: ${nScore.toFixed(1)}`
+        if (window.p3ReportTabScore) window.p3ReportTabScore("pad", nScore)
+      }
+    
+      })();
+    
+      })();
+    </script>
+
+    <script>
+      (function () {
+
+      (function () {
+
+      let points = [] // [{x, y, z}, ...] for 4 points
+      let flatEntries = [] // [{label, value}, ...] length 12, in x1,y1,z1,x2,y2,z2,... order
+      // Hidden quiz variables
+      var nScore = 0, nProblems = 3, nYes = 0.5, nAns = 0.5
+
+      const ncvGenerateBtn = document.getElementById("ncv-generateBtn")
+
+      // Random integer between min and max, inclusive
+      function randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min
+      }
+
+      // helper to format negative numbers in parentheses, matching vectorOperations.html style
+      const formatInput = n => (n < 0 ? `(${n})` : n)
+
+      window.ncvGenerateProblem = function () {
+        points = Array.from({ length: 4 }, () => ({
+          x: randomInt(-10, 10),
+          y: randomInt(-10, 10),
+          z: randomInt(-10, 10)
+        }))
+
+        flatEntries = points.flatMap((p, idx) => [
+          { label: `x${idx + 1}`, value: p.x },
+          { label: `y${idx + 1}`, value: p.y },
+          { label: `z${idx + 1}`, value: p.z }
+        ])
+
+        displayPoints()
+
+        document.getElementById("ncv-result-display").innerHTML = ""
+        document.getElementById("ncv-calculation-steps").innerHTML = ""
+
+        ncvGenerateBtn.classList.add("hidden")
+        document.getElementById("ncv-quiz-section").classList.add("hidden")
+        document.getElementById("ncv-quiz-feedback").innerHTML = ""
+        document.getElementById("ncv-quiz-hint").classList.add("hidden")
+
+        showQuizSection()
+      }
+
+      function displayPoints() {
+        const pointsDisplay = document.getElementById("ncv-points-display")
+
+        let rows = points.map((p, idx) => `<tr><td>Point ${idx + 1}</td><td>${p.x}</td><td>${p.y}</td><td>${p.z}</td></tr>`).join("")
+
+        pointsDisplay.innerHTML = `
+                <table class="points-table">
+                    <thead>
+                        <tr><th></th><th>x</th><th>y</th><th>z</th></tr>
+                    </thead>
+                    <tbody>
+                        ${rows}
+                    </tbody>
+                </table>
+            `
+      }
+
+      // Generate an initial set of points on page load
+      ncvGenerateProblem()
+
+      // --- Quiz functions ---
+
+      function showQuizSection() {
+        const quizSection = document.getElementById("ncv-quiz-section")
+        const quizInputs = document.getElementById("ncv-quiz-inputs")
+        const quizPrompt = document.getElementById("ncv-quiz-prompt")
+
+        quizPrompt.textContent = "Enter the 12 entries of the nodal coordinate vector X:"
+        let html = '<div class="ncv-quiz-input-row"><span>{</span>'
+        for (let i = 0; i < 12; i++) {
+          html += `<input type="text" id="ncv-quiz-input-${i}" placeholder="?">`
+          if (i < 11) html += ", "
+        }
+        html += '<span>}</span></div>'
+        quizInputs.innerHTML = html
+
+        document.getElementById("ncv-quiz-feedback").innerHTML = ""
+        document.getElementById("ncv-quiz-hint").classList.add("hidden")
+        quizSection.classList.remove("hidden")
+        document.getElementById("ncv-quizCheckBtn").disabled = false
+      }
+
+      window.ncvCheckQuiz = function () {
+        const correctArray = flatEntries.map(e => e.value)
+        const quizFeedback = document.getElementById("ncv-quiz-feedback")
+        const quizHint = document.getElementById("ncv-quiz-hint")
+        let allCorrect = true
+        let wrongEntries = []
+
+        for (let i = 0; i < 12; i++) {
+          const input = document.getElementById(`ncv-quiz-input-${i}`)
+          const userVal = parseFloat(input.value)
+          const correctVal = correctArray[i]
+
+          if (userVal === correctVal) {
+            input.classList.remove("incorrect")
+            input.classList.add("correct")
+          } else {
+            input.classList.remove("correct")
+            input.classList.add("incorrect")
+            allCorrect = false
+            wrongEntries.push({ index: i + 1, label: flatEntries[i].label, your: isNaN(userVal) ? "(empty)" : userVal, correct: correctVal })
+            const span = document.createElement("span")
+            span.className = "correct-val"
+            span.textContent = `\u2192 ${correctVal}`
+            input.parentNode.appendChild(span)
+          }
+        }
+
+        if (allCorrect) {
+          quizFeedback.textContent = "All correct! Your answer is right."
+          quizFeedback.className = "correct"
+          quizHint.classList.add("hidden")
+          nScore += nAns
+        } else {
+          quizFeedback.textContent = "Some entries are incorrect."
+          quizFeedback.className = "incorrect"
+          nScore = Math.max(0, nScore - nAns)
+          let hintHtml = "<strong>Errors found:</strong><br>"
+          wrongEntries.forEach(e => {
+            hintHtml += `Entry ${e.index} (${e.label}): your answer = ${e.your}, correct = ${e.correct}<br>`
+          })
+          hintHtml += "<br><strong>Step-by-step hint:</strong><br>"
+          for (let i = 0; i < 12; i++) {
+            hintHtml += `Entry ${i + 1} (${flatEntries[i].label}) = ${flatEntries[i].value}<br>`
+          }
+          quizHint.innerHTML = hintHtml
+          quizHint.classList.remove("hidden")
+        }
+
+        document.getElementById("ncv-quizCheckBtn").disabled = true
+        updateScoreDisplay()
+
+        if (allCorrect && nScore < nProblems) {
+          setTimeout(() => {
+            ncvGenerateProblem()
+          }, 1500)
+        } else if (nScore < nProblems) {
+          ncvGenerateBtn.classList.remove("hidden")
+        }
+      }
+
+      function updateScoreDisplay() {
+        const scoreDisplay = document.getElementById("ncv-score-display")
+        scoreDisplay.textContent = `Score: ${nScore.toFixed(1)}`
+        if (window.p3ReportTabScore) window.p3ReportTabScore("ncv", nScore)
+      }
+    
+      })();
+    
+      })();
+    </script>
+
+    <script>
+      (function () {
+
+      (function () {
+
+      let points = [] // [{x, y, z}, ...] for 4 points
+      let flatEntries = [] // [{label, value}, ...] length 12, in x1,y1,z1,x2,y2,z2,... order
+      let coordType, node, answerIndex, answerValue
+
+      // Hidden quiz variables
+      var nScore = 0, nProblems = 3, nYes = 0.5, nAns = 0.5
+
+      const nclGenerateBtn = document.getElementById("ncl-generateBtn")
+
+      const coordOffsets = { x: 0, y: 1, z: 2 }
+      const coordPosition = { x: 1, y: 2, z: 3 } // 1-based position of this coordinate within a node's (x, y, z) triplet
+      const coordLabels = { x: "x", y: "y", z: "z" }
+
+      // Random integer between min and max, inclusive
+      function randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min
+      }
+
+      window.nclGenerateProblem = function () {
+        points = Array.from({ length: 4 }, () => ({
+          x: randomInt(-10, 10),
+          y: randomInt(-10, 10),
+          z: randomInt(-10, 10)
+        }))
+
+        flatEntries = points.flatMap((p, idx) => [
+          { label: `x${idx + 1}`, value: p.x },
+          { label: `y${idx + 1}`, value: p.y },
+          { label: `z${idx + 1}`, value: p.z }
+        ])
+
+        // Randomly choose which coordinate and which node to ask about
+        const coordChoices = ["x", "y", "z"]
+        coordType = coordChoices[randomInt(0, 2)]
+        node = randomInt(1, 4)
+        answerIndex = (node - 1) * 3 + coordOffsets[coordType]
+        answerValue = flatEntries[answerIndex].value
+
+        displayVector(-1)
+        displayQuestion()
+
+        document.getElementById("ncl-answer-display").innerHTML = ""
+
+        nclGenerateBtn.classList.add("hidden")
+        document.getElementById("ncl-quiz-section").classList.add("hidden")
+        document.getElementById("ncl-quiz-feedback").innerHTML = ""
+        document.getElementById("ncl-quiz-hint").classList.add("hidden")
+
+        showQuizSection()
+      }
+
+      function displayVector(highlightIndex) {
+        const vectorDisplay = document.getElementById("ncl-vector-display")
+
+        const rowsHtml = flatEntries
+          .map((entry, k) => {
+            const cellClass = k === highlightIndex ? "target-highlight" : ""
+            return `<tr><td class="${cellClass}">${entry.value}</td></tr>`
+          })
+          .join("")
+
+        const vectorHtml = `
+                <span class="bracket">{</span>
+                <table class="vector-table"><tbody>${rowsHtml}</tbody></table>
+                <span class="bracket">}</span>
+            `
+
+        vectorDisplay.innerHTML = `
+                <div id="ncl-result-label">Nodal Coordinate Vector <strong>X</strong> =</div>
+                <div class="vector-container">${vectorHtml}</div>
+            `
+      }
+
+      function displayQuestion() {
+        const questionSection = document.getElementById("ncl-question-section")
+        questionSection.innerHTML = `<p>What is the <strong>${coordLabels[coordType]}</strong>-coordinate of node ${node}?</p>`
+      }
+
+      // Generate an initial problem on page load
+      nclGenerateProblem()
+
+      // --- Quiz functions ---
+
+      function showQuizSection() {
+        const quizSection = document.getElementById("ncl-quiz-section")
+        const quizInputs = document.getElementById("ncl-quiz-inputs")
+        const quizPrompt = document.getElementById("ncl-quiz-prompt")
+
+        quizPrompt.textContent = `What is the ${coordLabels[coordType]}-coordinate of node ${node}?`
+        let html = '<div class="ncl-quiz-input-row">'
+        html += '<input type="text" id="ncl-quiz-input-0" placeholder="?">'
+        html += '</div>'
+        quizInputs.innerHTML = html
+
+        document.getElementById("ncl-quiz-feedback").innerHTML = ""
+        document.getElementById("ncl-quiz-hint").classList.add("hidden")
+        quizSection.classList.remove("hidden")
+        document.getElementById("ncl-quizCheckBtn").disabled = false
+      }
+
+      window.nclCheckQuiz = function () {
+        const input = document.getElementById("ncl-quiz-input-0")
+        const userVal = parseFloat(input.value)
+        const quizFeedback = document.getElementById("ncl-quiz-feedback")
+        const quizHint = document.getElementById("ncl-quiz-hint")
+
+        if (userVal === answerValue) {
+          input.classList.remove("incorrect")
+          input.classList.add("correct")
+          quizFeedback.textContent = "Correct! Your answer is right."
+          quizFeedback.className = "correct"
+          quizHint.classList.add("hidden")
+          nScore += nAns
+        } else {
+          input.classList.remove("correct")
+          input.classList.add("incorrect")
+          quizFeedback.textContent = "Incorrect."
+          quizFeedback.className = "incorrect"
+          nScore = Math.max(0, nScore - nAns)
+          const span = document.createElement("span")
+          span.className = "correct-val"
+          span.textContent = `\u2192 ${answerValue}`
+          input.parentNode.appendChild(span)
+
+          let hintHtml = "<strong>Step-by-step hint:</strong><br>"
+          hintHtml += `Each node contributes 3 entries to the vector (its x, y, and z coordinates, in that order).<br>`
+          hintHtml += `Entry number = (node - 1) \u00d7 3 + position, where position = 1 for x, 2 for y, 3 for z.<br>`
+          hintHtml += `Here: (${node} - 1) \u00d7 3 + ${coordPosition[coordType]} = ${answerIndex + 1}<br>`
+          hintHtml += `So the ${coordLabels[coordType]}-coordinate of node ${node} is entry ${answerIndex + 1} of the vector: ${answerValue}`
+          quizHint.innerHTML = hintHtml
+          quizHint.classList.remove("hidden")
+        }
+
+        document.getElementById("ncl-quizCheckBtn").disabled = true
+        updateScoreDisplay()
+
+        if (userVal === answerValue && nScore < nProblems) {
+          setTimeout(() => {
+            nclGenerateProblem()
+          }, 1500)
+        } else if (nScore < nProblems) {
+          nclGenerateBtn.classList.remove("hidden")
+        }
+      }
+
+      function updateScoreDisplay() {
+        const scoreDisplay = document.getElementById("ncl-score-display")
+        scoreDisplay.textContent = `Score: ${nScore.toFixed(1)}`
+        if (window.p3ReportTabScore) window.p3ReportTabScore("ncl", nScore)
+      }
+    
+      })();
+    
+      })();
+    </script>
+
+    <script>
+      (function () {
+
+      (function () {
+
+      let vectorX = [] // 12 random components (before deformation)
+      let vectorXp = [] // 12 random components (after deformation)
+      let displacementVector = [] // vectorXp - vectorX, entrywise
+
+      let coordType, node, answerIndex, answerValue
+
+      // Hidden quiz variables
+      var nScore = 0, nProblems = 3, nYes = 0.5, nAns = 0.5
+
+      const ndvGenerateBtn = document.getElementById("ndv-generateBtn")
+
+      const coordOffsets = { x: 0, y: 1, z: 2 }
+      const coordPosition = { x: 1, y: 2, z: 3 } // 1-based position of this coordinate within a node's (x, y, z) triplet
+      const coordLabels = { x: "x", y: "y", z: "z" }
+
+      // Random integer between min and max, inclusive
+      function randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min
+      }
+
+      // helper to format negative numbers in parentheses, matching vectorOperations.html style
+      const formatInput = n => (n < 0 ? `(${n})` : n)
+
+      function buildRandomVector(length) {
+        return Array.from({ length }, () => randomInt(-10, 10))
+      }
+
+      window.ndvGenerateProblem = function () {
+        vectorX = buildRandomVector(12)
+        vectorXp = buildRandomVector(12)
+        displacementVector = vectorX.map((x, i) => vectorXp[i] - x)
+
+        // Randomly choose which coordinate and which node the follow-up question will ask about
+        const coordChoices = ["x", "y", "z"]
+        coordType = coordChoices[randomInt(0, 2)]
+        node = randomInt(1, 4)
+        answerIndex = (node - 1) * 3 + coordOffsets[coordType]
+        answerValue = displacementVector[answerIndex]
+
+        displayVectors()
+
+        // Reset state for the new round
+        document.getElementById("ndv-result-display").innerHTML = ""
+        document.getElementById("ndv-calculation-steps").innerHTML = ""
+
+        ndvGenerateBtn.classList.add("hidden")
+        document.getElementById("ndv-quiz-section").classList.add("hidden")
+        document.getElementById("ndv-quiz-feedback").innerHTML = ""
+        document.getElementById("ndv-quiz-hint").classList.add("hidden")
+
+        showQuizSection()
+      }
+
+      function renderVectorColumn(values, highlightIndices) {
+        const rowsHtml = values
+          .map((v, k) => {
+            const cellClass = highlightIndices && highlightIndices.has(k) ? "target-highlight" : ""
+            return `<tr><td class="${cellClass}">${v}</td></tr>`
+          })
+          .join("")
+
+        return `
+                <span class="bracket">{</span>
+                <table class="vector-table"><tbody>${rowsHtml}</tbody></table>
+                <span class="bracket">}</span>
+            `
+      }
+
+      function displayVectors() {
+        const vectorsDisplay = document.getElementById("ndv-vectors-display")
+        vectorsDisplay.innerHTML = `
+                <div class="vector-block">
+                    <div class="vector-block-label">X</div>
+                    <div class="vector-container">${renderVectorColumn(vectorX)}</div>
+                </div>
+                <div class="vector-block">
+                    <div class="vector-block-label">X&prime;</div>
+                    <div class="vector-container">${renderVectorColumn(vectorXp)}</div>
+                </div>
+            `
+      }
+
+      // Generate an initial pair of vectors on page load
+      ndvGenerateProblem()
+
+      // --- Quiz functions ---
+
+      function showQuizSection() {
+        const quizSection = document.getElementById("ndv-quiz-section")
+        const quizInputs = document.getElementById("ndv-quiz-inputs")
+        const quizPrompt = document.getElementById("ndv-quiz-prompt")
+
+        quizPrompt.textContent = "Enter the 12 entries of the displacement vector u = X' - X:"
+        let html = '<div class="ndv-quiz-input-row"><span>{</span>'
+        for (let i = 0; i < 12; i++) {
+          html += `<input type="text" id="ndv-quiz-input-${i}" placeholder="?">`
+          if (i < 11) html += ", "
+        }
+        html += '<span>}</span></div>'
+        quizInputs.innerHTML = html
+
+        document.getElementById("ndv-quiz-feedback").innerHTML = ""
+        document.getElementById("ndv-quiz-hint").classList.add("hidden")
+        quizSection.classList.remove("hidden")
+        document.getElementById("ndv-quizCheckBtn").disabled = false
+      }
+
+      window.ndvCheckQuiz = function () {
+        const correctArray = displacementVector
+        const quizFeedback = document.getElementById("ndv-quiz-feedback")
+        const quizHint = document.getElementById("ndv-quiz-hint")
+        let allCorrect = true
+        let wrongEntries = []
+
+        for (let i = 0; i < 12; i++) {
+          const input = document.getElementById(`ndv-quiz-input-${i}`)
+          const userVal = parseFloat(input.value)
+          const correctVal = correctArray[i]
+
+          if (userVal === correctVal) {
+            input.classList.remove("incorrect")
+            input.classList.add("correct")
+          } else {
+            input.classList.remove("correct")
+            input.classList.add("incorrect")
+            allCorrect = false
+            wrongEntries.push({ index: i + 1, your: isNaN(userVal) ? "(empty)" : userVal, correct: correctVal })
+            const span = document.createElement("span")
+            span.className = "correct-val"
+            span.textContent = `\u2192 ${correctVal}`
+            input.parentNode.appendChild(span)
+          }
+        }
+
+        if (allCorrect) {
+          quizFeedback.textContent = "All correct! Your answer is right."
+          quizFeedback.className = "correct"
+          quizHint.classList.add("hidden")
+          nScore += nAns
+        } else {
+          quizFeedback.textContent = "Some entries are incorrect."
+          quizFeedback.className = "incorrect"
+          nScore = Math.max(0, nScore - nAns)
+          let hintHtml = "<strong>Errors found:</strong><br>"
+          wrongEntries.forEach(e => {
+            hintHtml += `Entry ${e.index}: your answer = ${e.your}, correct = ${e.correct}<br>`
+          })
+          hintHtml += "<br><strong>Step-by-step hint:</strong><br>"
+          for (let i = 0; i < 12; i++) {
+            hintHtml += `Entry ${i + 1}: ${formatInput(vectorXp[i])} - ${formatInput(vectorX[i])} = ${displacementVector[i]}<br>`
+          }
+          quizHint.innerHTML = hintHtml
+          quizHint.classList.remove("hidden")
+        }
+
+        document.getElementById("ndv-quizCheckBtn").disabled = true
+        updateScoreDisplay()
+
+        if (allCorrect && nScore < nProblems) {
+          setTimeout(() => {
+            ndvGenerateProblem()
+          }, 1500)
+        } else if (nScore < nProblems) {
+          ndvGenerateBtn.classList.remove("hidden")
+        }
+      }
+
+      function updateScoreDisplay() {
+        const scoreDisplay = document.getElementById("ndv-score-display")
+        scoreDisplay.textContent = `Score: ${nScore.toFixed(1)}`
+        if (window.p3ReportTabScore) window.p3ReportTabScore("ndv", nScore)
+      }
+    
+      })();
+    
+      })();
+    </script>
+
+    <script>
+      (function () {
+
+      // ── Shared helpers ──
+      function randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min
+      }
+      const formatInput = n => (n < 0 ? `(${n})` : n)
+
+      window.p1SwitchTab = function (name) {
+        document.querySelectorAll('.p1-tab-content').forEach(el => el.classList.remove('active'))
+        document.querySelectorAll('#p1-tab-bar button').forEach(el => el.classList.remove('active'))
+        document.getElementById('p1-tab-' + name).classList.add('active')
+        const idx = { sum: 0, diff: 1, scalar: 2, combo: 3 }[name]
+        document.querySelectorAll('#p1-tab-bar button')[idx].classList.add('active')
+      }
+
+      const tabScores = { sum: 0, diff: 0, scalar: 0, combo: 0 }
+      function updateTotalScore() {
+        const raw = tabScores.sum + tabScores.diff + tabScores.scalar + tabScores.combo
+        const total = window.hwClamp ? window.hwClamp(raw, 0, 12) : Math.max(0, Math.min(12, raw))
+        document.getElementById("p1-total-score").textContent = total.toFixed(1)
+        if (window.reportP1Total) window.reportP1Total(total)
+      }
+      window.p1GetTabScores = function () { return Object.assign({}, tabScores) };
+      window.p1SetTabScores = function (scores) {
+        Object.keys(tabScores).forEach(key => {
+          if (scores[key] !== undefined) {
+            const clamped = Math.max(0, Number(scores[key]) || 0)
+            tabScores[key] = clamped
+            const el = document.getElementById(`p1-${key}-score-display`)
+            if (el) el.textContent = `Score: ${clamped.toFixed(1)}`
+          }
+        })
+        updateTotalScore()
+      };
+
+      // ═══════════════════════════════════════════
+      //  VECTOR SUM
+      // ═══════════════════════════════════════════
+      (function () {
+        let vectorA, vectorB
+        let sumExists = false, sumResult = null
+        var nScore = 0, nProblems = 3, nYes = 0.5, nAns = 1
+        var quizAnsweredYesNo = false
+        let existsHistory = []
+
+        const generateBtn = document.getElementById("p1-sum-generateBtn")
+        const yesBtn = document.getElementById("p1-sum-yesBtn")
+        const noBtn = document.getElementById("p1-sum-noBtn")
+        const feedback = document.getElementById("p1-sum-feedback")
+        const questionSection = document.getElementById("p1-sum-question-section")
+
+        function violatesConsecutiveRule(candidateExists) {
+          if (candidateExists) return false
+          const lastTwo = existsHistory.slice(-2)
+          return lastTwo.filter(e => e === false).length + 1 > 1
+        }
+
+        window.p1SumGenerateVectors = function () {
+          let sizeA, sizeB, exists, attempts = 0
+          do {
+            sizeA = randomInt(3, 5); sizeB = randomInt(3, 5)
+            exists = sizeA === sizeB; attempts++
+          } while (violatesConsecutiveRule(exists) && attempts < 1000)
+
+          existsHistory.push(exists)
+          if (existsHistory.length > 2) existsHistory.shift()
+
+          vectorA = Array.from({ length: sizeA }, () => randomInt(-10, 10))
+          vectorB = Array.from({ length: sizeB }, () => randomInt(-10, 10))
+          sumExists = exists
+          sumResult = sumExists ? vectorA.map((a, i) => a + vectorB[i]) : null
+
+          document.getElementById("p1-sum-vector-display").innerHTML =
+            `<p>Vector A: {${vectorA.join(", ")}}<sup>T</sup></p><p>Vector B: {${vectorB.join(", ")}}<sup>T</sup></p>`
+
+          feedback.textContent = ""; feedback.className = ""
+          document.getElementById("p1-sum-result-display").innerHTML = ""
+          document.getElementById("p1-sum-calculation-steps").innerHTML = ""
+          generateBtn.classList.add("hidden")
+          yesBtn.disabled = false; noBtn.disabled = false
+          questionSection.classList.remove("hidden")
+          quizAnsweredYesNo = false
+          document.getElementById("p1-sum-quiz-section").classList.add("hidden")
+          document.getElementById("p1-sum-quiz-feedback").innerHTML = ""
+          document.getElementById("p1-sum-quiz-hint").classList.add("hidden")
+        }
+
+        window.p1SumAnswerQuestion = function (userSaysExists) {
+          const correct = userSaysExists === sumExists
+          yesBtn.disabled = true; noBtn.disabled = true
+          quizAnsweredYesNo = true
+          if (!correct) nScore -= nYes
+
+          if (sumExists) {
+            feedback.textContent = correct
+              ? "Correct! A and B have the same size, so the sum exists."
+              : `Not quite. A and B both have size ${vectorA.length}, so the sum does exist.`
+          } else {
+            feedback.textContent = correct
+              ? "Correct! A and B have different sizes, so the sum does not exist."
+              : `Not quite. A has size ${vectorA.length} and B has size ${vectorB.length}, so the sum does not exist.`
+          }
+          feedback.className = correct ? "correct" : "incorrect"
+
+          if (sumExists) {
+            sumShowQuizSection(sumResult)
+          } else {
+            sumUpdateScoreDisplay()
+            if (nScore < nProblems) generateBtn.classList.remove("hidden")
+          }
+        }
+
+        function sumShowQuizSection(correctArray) {
+          const prompt = document.getElementById("p1-sum-quiz-prompt")
+          prompt.textContent = "Enter your answer for A + B:"
+          let html = '<div class="quiz-input-row"><span>{</span>'
+          for (let i = 0; i < correctArray.length; i++) {
+            html += `<input type="text" id="p1-sum-quiz-input-${i}" placeholder="?">`
+            if (i < correctArray.length - 1) html += ", "
+          }
+          html += '<span>}</span></div>'
+          document.getElementById("p1-sum-quiz-inputs").innerHTML = html
+          document.getElementById("p1-sum-quiz-feedback").innerHTML = ""
+          document.getElementById("p1-sum-quiz-hint").classList.add("hidden")
+          document.getElementById("p1-sum-quiz-section").classList.remove("hidden")
+          document.getElementById("p1-sum-quizCheckBtn").disabled = false
+        }
+
+        window.p1SumCheckQuiz = function () {
+          const correctArray = sumResult
+          const quizFeedback = document.getElementById("p1-sum-quiz-feedback")
+          const quizHint = document.getElementById("p1-sum-quiz-hint")
+          let allCorrect = true, wrongEntries = []
+
+          for (let i = 0; i < correctArray.length; i++) {
+            const input = document.getElementById(`p1-sum-quiz-input-${i}`)
+            const userVal = parseFloat(input.value)
+            if (userVal === correctArray[i]) {
+              input.classList.remove("incorrect"); input.classList.add("correct")
+            } else {
+              input.classList.remove("correct"); input.classList.add("incorrect")
+              allCorrect = false
+              wrongEntries.push({ index: i + 1, your: isNaN(userVal) ? "(empty)" : userVal, correct: correctArray[i] })
+              const span = document.createElement("span"); span.className = "correct-val"
+              span.textContent = `\u2192 ${correctArray[i]}`
+              input.parentNode.appendChild(span)
+            }
+          }
+
+          if (allCorrect) {
+            quizFeedback.textContent = "All correct! Your answer is right."
+            quizFeedback.className = "correct"; quizHint.classList.add("hidden")
+            nScore += nAns
+          } else {
+            quizFeedback.textContent = "Some entries are incorrect."
+            quizFeedback.className = "incorrect"; nScore = Math.max(0, nScore - nAns)
+            let hintHtml = "<strong>Errors found:</strong><br>"
+            wrongEntries.forEach(e => { hintHtml += `Entry ${e.index}: your answer = ${e.your}, correct = ${e.correct}<br>` })
+            hintHtml += "<br><strong>Step-by-step hint:</strong><br>"
+            for (let i = 0; i < vectorA.length; i++) {
+              hintHtml += `Entry ${i + 1}: ${formatInput(vectorA[i])} + ${formatInput(vectorB[i])} = ${correctArray[i]}<br>`
+            }
+            quizHint.innerHTML = hintHtml; quizHint.classList.remove("hidden")
+          }
+
+          document.getElementById("p1-sum-quizCheckBtn").disabled = true
+          sumUpdateScoreDisplay()
+          if (allCorrect && nScore < nProblems) {
+            setTimeout(() => { p1SumGenerateVectors() }, 1500)
+          } else if (nScore < nProblems) {
+            generateBtn.classList.remove("hidden")
+          }
+        }
+
+        function sumUpdateScoreDisplay() {
+          document.getElementById("p1-sum-score-display").textContent = `Score: ${nScore.toFixed(1)}`
+          tabScores.sum = nScore; updateTotalScore()
+        }
+
+        p1SumGenerateVectors()
+      })();
+
+      // ═══════════════════════════════════════════
+      //  VECTOR SUBTRACTION
+      // ═══════════════════════════════════════════
+      (function () {
+        let vectorA, vectorB
+        let differenceExists = false, differenceResult = null
+        var nScore = 0, nProblems = 3, nYes = 0.5, nAns = 1
+        var quizAnsweredYesNo = false
+        let existsHistory = []
+
+        const generateBtn = document.getElementById("p1-diff-generateBtn")
+        const yesBtn = document.getElementById("p1-diff-yesBtn")
+        const noBtn = document.getElementById("p1-diff-noBtn")
+        const feedback = document.getElementById("p1-diff-feedback")
+        const questionSection = document.getElementById("p1-diff-question-section")
+
+        function violatesConsecutiveRule(candidateExists) {
+          if (candidateExists) return false
+          const lastTwo = existsHistory.slice(-2)
+          return lastTwo.filter(e => e === false).length + 1 > 1
+        }
+
+        window.p1DiffGenerateVectors = function () {
+          let sizeA, sizeB, exists, attempts = 0
+          do {
+            sizeA = randomInt(3, 5); sizeB = randomInt(3, 5)
+            exists = sizeA === sizeB; attempts++
+          } while (violatesConsecutiveRule(exists) && attempts < 1000)
+
+          existsHistory.push(exists)
+          if (existsHistory.length > 2) existsHistory.shift()
+
+          vectorA = Array.from({ length: sizeA }, () => randomInt(-10, 10))
+          vectorB = Array.from({ length: sizeB }, () => randomInt(-10, 10))
+          differenceExists = exists
+          differenceResult = differenceExists ? vectorA.map((a, i) => a - vectorB[i]) : null
+
+          document.getElementById("p1-diff-vector-display").innerHTML =
+            `<p>Vector A: {${vectorA.join(", ")}}<sup>T</sup></p><p>Vector B: {${vectorB.join(", ")}}<sup>T</sup></p>`
+
+          feedback.textContent = ""; feedback.className = ""
+          document.getElementById("p1-diff-result-display").innerHTML = ""
+          document.getElementById("p1-diff-calculation-steps").innerHTML = ""
+          generateBtn.classList.add("hidden")
+          yesBtn.disabled = false; noBtn.disabled = false
+          questionSection.classList.remove("hidden")
+          quizAnsweredYesNo = false
+          document.getElementById("p1-diff-quiz-section").classList.add("hidden")
+          document.getElementById("p1-diff-quiz-feedback").innerHTML = ""
+          document.getElementById("p1-diff-quiz-hint").classList.add("hidden")
+        }
+
+        window.p1DiffAnswerQuestion = function (userSaysExists) {
+          const correct = userSaysExists === differenceExists
+          yesBtn.disabled = true; noBtn.disabled = true
+          quizAnsweredYesNo = true
+          if (!correct) nScore -= nYes
+
+          if (differenceExists) {
+            feedback.textContent = correct
+              ? "Correct! A and B have the same size, so the difference exists."
+              : `Not quite. A and B both have size ${vectorA.length}, so the difference does exist.`
+          } else {
+            feedback.textContent = correct
+              ? "Correct! A and B have different sizes, so the difference does not exist."
+              : `Not quite. A has size ${vectorA.length} and B has size ${vectorB.length}, so the difference does not exist.`
+          }
+          feedback.className = correct ? "correct" : "incorrect"
+
+          if (differenceExists) {
+            diffShowQuizSection(differenceResult)
+          } else {
+            diffUpdateScoreDisplay()
+            if (nScore < nProblems) generateBtn.classList.remove("hidden")
+          }
+        }
+
+        function diffShowQuizSection(correctArray) {
+          const prompt = document.getElementById("p1-diff-quiz-prompt")
+          prompt.textContent = "Enter your answer for A - B:"
+          let html = '<div class="quiz-input-row"><span>{</span>'
+          for (let i = 0; i < correctArray.length; i++) {
+            html += `<input type="text" id="p1-diff-quiz-input-${i}" placeholder="?">`
+            if (i < correctArray.length - 1) html += ", "
+          }
+          html += '<span>}</span></div>'
+          document.getElementById("p1-diff-quiz-inputs").innerHTML = html
+          document.getElementById("p1-diff-quiz-feedback").innerHTML = ""
+          document.getElementById("p1-diff-quiz-hint").classList.add("hidden")
+          document.getElementById("p1-diff-quiz-section").classList.remove("hidden")
+          document.getElementById("p1-diff-quizCheckBtn").disabled = false
+        }
+
+        window.p1DiffCheckQuiz = function () {
+          const correctArray = differenceResult
+          const quizFeedback = document.getElementById("p1-diff-quiz-feedback")
+          const quizHint = document.getElementById("p1-diff-quiz-hint")
+          let allCorrect = true, wrongEntries = []
+
+          for (let i = 0; i < correctArray.length; i++) {
+            const input = document.getElementById(`p1-diff-quiz-input-${i}`)
+            const userVal = parseFloat(input.value)
+            if (userVal === correctArray[i]) {
+              input.classList.remove("incorrect"); input.classList.add("correct")
+            } else {
+              input.classList.remove("correct"); input.classList.add("incorrect")
+              allCorrect = false
+              wrongEntries.push({ index: i + 1, your: isNaN(userVal) ? "(empty)" : userVal, correct: correctArray[i] })
+              const span = document.createElement("span"); span.className = "correct-val"
+              span.textContent = `\u2192 ${correctArray[i]}`
+              input.parentNode.appendChild(span)
+            }
+          }
+
+          if (allCorrect) {
+            quizFeedback.textContent = "All correct! Your answer is right."
+            quizFeedback.className = "correct"; quizHint.classList.add("hidden")
+            nScore += nAns
+          } else {
+            quizFeedback.textContent = "Some entries are incorrect."
+            quizFeedback.className = "incorrect"; nScore = Math.max(0, nScore - nAns)
+            let hintHtml = "<strong>Errors found:</strong><br>"
+            wrongEntries.forEach(e => { hintHtml += `Entry ${e.index}: your answer = ${e.your}, correct = ${e.correct}<br>` })
+            hintHtml += "<br><strong>Step-by-step hint:</strong><br>"
+            for (let i = 0; i < vectorA.length; i++) {
+              hintHtml += `Entry ${i + 1}: ${formatInput(vectorA[i])} - ${formatInput(vectorB[i])} = ${correctArray[i]}<br>`
+            }
+            quizHint.innerHTML = hintHtml; quizHint.classList.remove("hidden")
+          }
+
+          document.getElementById("p1-diff-quizCheckBtn").disabled = true
+          diffUpdateScoreDisplay()
+          if (allCorrect && nScore < nProblems) {
+            setTimeout(() => { p1DiffGenerateVectors() }, 1500)
+          } else if (nScore < nProblems) {
+            generateBtn.classList.remove("hidden")
+          }
+        }
+
+        function diffUpdateScoreDisplay() {
+          document.getElementById("p1-diff-score-display").textContent = `Score: ${nScore.toFixed(1)}`
+          tabScores.diff = nScore; updateTotalScore()
+        }
+
+        p1DiffGenerateVectors()
+      })();
+
+      // ═══════════════════════════════════════════
+      //  SCALAR MULTIPLICATION
+      // ═══════════════════════════════════════════
+      (function () {
+        let vectorA, scalarK, productResult = null
+        var nScore = 0, nProblems = 3, nAns = 1
+
+        window.p1ScalarGenerateVectors = function () {
+          const size = randomInt(3, 5)
+          vectorA = Array.from({ length: size }, () => randomInt(-10, 10))
+          do { scalarK = randomInt(-5, 5) } while (scalarK === 0)
+          productResult = vectorA.map(a => scalarK * a)
+
+          document.getElementById("p1-scalar-vector-display").innerHTML =
+            `<p>Vector A: {${vectorA.join(", ")}}<sup>T</sup></p><p>Scalar k = ${scalarK}</p>`
+
+          document.getElementById("p1-scalar-result-display").innerHTML = ""
+          document.getElementById("p1-scalar-calculation-steps").innerHTML = ""
+          document.getElementById("p1-scalar-quiz-section").classList.add("hidden")
+          document.getElementById("p1-scalar-quiz-feedback").innerHTML = ""
+          document.getElementById("p1-scalar-quiz-hint").classList.add("hidden")
+          scalarShowQuizSection(productResult)
+        }
+
+        function scalarShowQuizSection(correctArray) {
+          const prompt = document.getElementById("p1-scalar-quiz-prompt")
+          prompt.textContent = "Enter your answer for kA:"
+          let html = '<div class="quiz-input-row"><span>{</span>'
+          for (let i = 0; i < correctArray.length; i++) {
+            html += `<input type="text" id="p1-scalar-quiz-input-${i}" placeholder="?">`
+            if (i < correctArray.length - 1) html += ", "
+          }
+          html += '<span>}</span></div>'
+          document.getElementById("p1-scalar-quiz-inputs").innerHTML = html
+          document.getElementById("p1-scalar-quiz-feedback").innerHTML = ""
+          document.getElementById("p1-scalar-quiz-hint").classList.add("hidden")
+          document.getElementById("p1-scalar-quiz-section").classList.remove("hidden")
+          document.getElementById("p1-scalar-quizCheckBtn").disabled = false
+        }
+
+        window.p1ScalarCheckQuiz = function () {
+          const correctArray = productResult
+          const quizFeedback = document.getElementById("p1-scalar-quiz-feedback")
+          const quizHint = document.getElementById("p1-scalar-quiz-hint")
+          let allCorrect = true, wrongEntries = []
+
+          for (let i = 0; i < correctArray.length; i++) {
+            const input = document.getElementById(`p1-scalar-quiz-input-${i}`)
+            const userVal = parseFloat(input.value)
+            if (userVal === correctArray[i]) {
+              input.classList.remove("incorrect"); input.classList.add("correct")
+            } else {
+              input.classList.remove("correct"); input.classList.add("incorrect")
+              allCorrect = false
+              wrongEntries.push({ index: i + 1, your: isNaN(userVal) ? "(empty)" : userVal, correct: correctArray[i] })
+              const span = document.createElement("span"); span.className = "correct-val"
+              span.textContent = `\u2192 ${correctArray[i]}`
+              input.parentNode.appendChild(span)
+            }
+          }
+
+          if (allCorrect) {
+            quizFeedback.textContent = "All correct! Your answer is right."
+            quizFeedback.className = "correct"; quizHint.classList.add("hidden")
+            nScore += nAns
+          } else {
+            quizFeedback.textContent = "Some entries are incorrect."
+            quizFeedback.className = "incorrect"; nScore = Math.max(0, nScore - nAns)
+            let hintHtml = "<strong>Errors found:</strong><br>"
+            wrongEntries.forEach(e => { hintHtml += `Entry ${e.index}: your answer = ${e.your}, correct = ${e.correct}<br>` })
+            hintHtml += "<br><strong>Step-by-step hint:</strong><br>"
+            for (let i = 0; i < vectorA.length; i++) {
+              hintHtml += `Entry ${i + 1}: (${scalarK}) * ${formatInput(vectorA[i])} = ${correctArray[i]}<br>`
+            }
+            quizHint.innerHTML = hintHtml; quizHint.classList.remove("hidden")
+          }
+
+          document.getElementById("p1-scalar-quizCheckBtn").disabled = true
+          document.getElementById("p1-scalar-score-display").textContent = `Score: ${nScore.toFixed(1)}`
+          tabScores.scalar = nScore; updateTotalScore()
+
+          if (allCorrect && nScore < nProblems) {
+            setTimeout(() => { p1ScalarGenerateVectors() }, 1500)
+          }
+        }
+
+        p1ScalarGenerateVectors()
+      })();
+
+      // ═══════════════════════════════════════════
+      //  LINEAR COMBINATION
+      // ═══════════════════════════════════════════
+      (function () {
+        let vectorA, vectorB, c1, c2
+        let combinationExists = false, combinationResult = null
+        var nScore = 0, nProblems = 3, nYes = 0.5, nAns = 1
+        var quizAnsweredYesNo = false
+        let existsHistory = []
+
+        const generateBtn = document.getElementById("p1-combo-generateBtn")
+        const yesBtn = document.getElementById("p1-combo-yesBtn")
+        const noBtn = document.getElementById("p1-combo-noBtn")
+        const feedback = document.getElementById("p1-combo-feedback")
+        const questionSection = document.getElementById("p1-combo-question-section")
+
+        function violatesConsecutiveRule(candidateExists) {
+          if (candidateExists) return false
+          const lastTwo = existsHistory.slice(-2)
+          return lastTwo.filter(e => e === false).length + 1 > 1
+        }
+
+        window.p1ComboGenerateVectors = function () {
+          let sizeA, sizeB, exists, attempts = 0
+          do {
+            sizeA = randomInt(3, 5); sizeB = randomInt(3, 5)
+            exists = sizeA === sizeB; attempts++
+          } while (violatesConsecutiveRule(exists) && attempts < 1000)
+
+          existsHistory.push(exists)
+          if (existsHistory.length > 2) existsHistory.shift()
+
+          vectorA = Array.from({ length: sizeA }, () => randomInt(-10, 10))
+          vectorB = Array.from({ length: sizeB }, () => randomInt(-10, 10))
+
+          do { c1 = randomInt(-5, 5) } while (c1 === 0)
+          do { c2 = randomInt(-5, 5) } while (c2 === 0)
+
+          combinationExists = exists
+          combinationResult = combinationExists ? vectorA.map((a, i) => c1 * a + c2 * vectorB[i]) : null
+
+          document.getElementById("p1-combo-vector-display").innerHTML =
+            `<p>Vector A: {${vectorA.join(", ")}}<sup>T</sup></p><p>Vector B: {${vectorB.join(", ")}}<sup>T</sup></p><p>c<sub>1</sub> = ${c1}, c<sub>2</sub> = ${c2}</p>`
+
+          feedback.textContent = ""; feedback.className = ""
+          document.getElementById("p1-combo-result-display").innerHTML = ""
+          document.getElementById("p1-combo-calculation-steps").innerHTML = ""
+          generateBtn.classList.add("hidden")
+          yesBtn.disabled = false; noBtn.disabled = false
+          questionSection.classList.remove("hidden")
+          quizAnsweredYesNo = false
+          document.getElementById("p1-combo-quiz-section").classList.add("hidden")
+          document.getElementById("p1-combo-quiz-feedback").innerHTML = ""
+          document.getElementById("p1-combo-quiz-hint").classList.add("hidden")
+        }
+
+        window.p1ComboAnswerQuestion = function (userSaysExists) {
+          const correct = userSaysExists === combinationExists
+          yesBtn.disabled = true; noBtn.disabled = true
+          quizAnsweredYesNo = true
+          if (!correct) nScore -= nYes
+
+          if (combinationExists) {
+            feedback.textContent = correct
+              ? "Correct! A and B have the same size, so the linear combination exists."
+              : `Not quite. A and B both have size ${vectorA.length}, so the linear combination does exist.`
+          } else {
+            feedback.textContent = correct
+              ? "Correct! A and B have different sizes, so the linear combination does not exist."
+              : `Not quite. A has size ${vectorA.length} and B has size ${vectorB.length}, so the linear combination does not exist.`
+          }
+          feedback.className = correct ? "correct" : "incorrect"
+
+          if (combinationExists) {
+            comboShowQuizSection(combinationResult)
+          } else {
+            comboUpdateScoreDisplay()
+            if (nScore < nProblems) generateBtn.classList.remove("hidden")
+          }
+        }
+
+        function comboShowQuizSection(correctArray) {
+          const prompt = document.getElementById("p1-combo-quiz-prompt")
+          prompt.textContent = "Enter your answer for c\u2081A + c\u2082B:"
+          let html = '<div class="quiz-input-row"><span>{</span>'
+          for (let i = 0; i < correctArray.length; i++) {
+            html += `<input type="text" id="p1-combo-quiz-input-${i}" placeholder="?">`
+            if (i < correctArray.length - 1) html += ", "
+          }
+          html += '<span>}</span></div>'
+          document.getElementById("p1-combo-quiz-inputs").innerHTML = html
+          document.getElementById("p1-combo-quiz-feedback").innerHTML = ""
+          document.getElementById("p1-combo-quiz-hint").classList.add("hidden")
+          document.getElementById("p1-combo-quiz-section").classList.remove("hidden")
+          document.getElementById("p1-combo-quizCheckBtn").disabled = false
+        }
+
+        window.p1ComboCheckQuiz = function () {
+          const correctArray = combinationResult
+          const quizFeedback = document.getElementById("p1-combo-quiz-feedback")
+          const quizHint = document.getElementById("p1-combo-quiz-hint")
+          let allCorrect = true, wrongEntries = []
+
+          for (let i = 0; i < correctArray.length; i++) {
+            const input = document.getElementById(`p1-combo-quiz-input-${i}`)
+            const userVal = parseFloat(input.value)
+            if (userVal === correctArray[i]) {
+              input.classList.remove("incorrect"); input.classList.add("correct")
+            } else {
+              input.classList.remove("correct"); input.classList.add("incorrect")
+              allCorrect = false
+              wrongEntries.push({ index: i + 1, your: isNaN(userVal) ? "(empty)" : userVal, correct: correctArray[i] })
+              const span = document.createElement("span"); span.className = "correct-val"
+              span.textContent = `\u2192 ${correctArray[i]}`
+              input.parentNode.appendChild(span)
+            }
+          }
+
+          if (allCorrect) {
+            quizFeedback.textContent = "All correct! Your answer is right."
+            quizFeedback.className = "correct"; quizHint.classList.add("hidden")
+            nScore += nAns
+          } else {
+            quizFeedback.textContent = "Some entries are incorrect."
+            quizFeedback.className = "incorrect"; nScore = Math.max(0, nScore - nAns)
+            let hintHtml = "<strong>Errors found:</strong><br>"
+            wrongEntries.forEach(e => { hintHtml += `Entry ${e.index}: your answer = ${e.your}, correct = ${e.correct}<br>` })
+            hintHtml += "<br><strong>Step-by-step hint:</strong><br>"
+            for (let i = 0; i < vectorA.length; i++) {
+              const term1 = c1 * vectorA[i], term2 = c2 * vectorB[i]
+              hintHtml += `Entry ${i + 1}: (${c1}) * ${formatInput(vectorA[i])} + (${c2}) * ${formatInput(vectorB[i])} = ${formatInput(term1)} + ${formatInput(term2)} = ${correctArray[i]}<br>`
+            }
+            quizHint.innerHTML = hintHtml; quizHint.classList.remove("hidden")
+          }
+
+          document.getElementById("p1-combo-quizCheckBtn").disabled = true
+          comboUpdateScoreDisplay()
+          if (allCorrect && nScore < nProblems) {
+            setTimeout(() => { p1ComboGenerateVectors() }, 1500)
+          } else if (nScore < nProblems) {
+            generateBtn.classList.remove("hidden")
+          }
+        }
+
+        function comboUpdateScoreDisplay() {
+          document.getElementById("p1-combo-score-display").textContent = `Score: ${nScore.toFixed(1)}`
+          tabScores.combo = nScore; updateTotalScore()
+        }
+
+        p1ComboGenerateVectors()
+      })();
+    
+      })();
+    </script>
+
+    <script>
+      (function () {
+
+      // ── Shared helpers ──
+      function randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min
+      }
+      const formatInput = n => (n < 0 ? `(${n})` : n)
+
+      function buildRandomMatrix(rows, cols) {
+        return Array.from({ length: rows }, () => Array.from({ length: cols }, () => randomInt(-10, 10)))
+      }
+
+      function renderMatrixTable(matrix) {
+        let html = `<table class="matrix-table"><tbody>`
+        matrix.forEach(row => {
+          html += `<tr>${row.map(v => `<td>${v}</td>`).join("")}</tr>`
+        })
+        html += `</tbody></table>`
+        return html
+      }
+
+      window.p2SwitchTab = function (name) {
+        document.querySelectorAll('.p2-tab-content').forEach(el => el.classList.remove('active'))
+        document.querySelectorAll('#p2-tab-bar button').forEach(el => el.classList.remove('active'))
+        document.getElementById('p2-tab-' + name).classList.add('active')
+        const idx = { sum: 0, diff: 1, prod: 2, trans: 3, scalar: 4 }[name]
+        document.querySelectorAll('#p2-tab-bar button')[idx].classList.add('active')
+      }
+
+      const tabScores = { sum: 0, diff: 0, prod: 0, trans: 0, scalar: 0 }
+      function updateTotalScore() {
+        const raw = tabScores.sum + tabScores.diff + tabScores.prod + tabScores.trans + tabScores.scalar
+        const total = window.hwClamp ? window.hwClamp(raw, 0, 20) : Math.max(0, Math.min(20, raw))
+        document.getElementById("p2-total-score").textContent = total.toFixed(1)
+        if (window.reportP2Total) window.reportP2Total(total)
+      }
+      window.p2GetTabScores = function () { return Object.assign({}, tabScores) };
+      window.p2SetTabScores = function (scores) {
+        Object.keys(tabScores).forEach(key => {
+          if (scores[key] !== undefined) {
+            const clamped = Math.max(0, Number(scores[key]) || 0)
+            tabScores[key] = clamped
+            const el = document.getElementById(`p2-${key}-score-display`)
+            if (el) el.textContent = `Score: ${clamped.toFixed(1)}`
+          }
+        })
+        updateTotalScore()
+      };
+
+      // ═══════════════════════════════════════════
+      //  MATRIX SUM  (2 problems, 2 pts each = max 4)
+      // ═══════════════════════════════════════════
+      (function () {
+        let matrixA, matrixB
+        let rowsA, colsA, rowsB, colsB
+        let sumExists = false, sumResult = null
+        var nScore = 0, nProblems = 4, nYes = 0.5, nAns = 2
+        var quizAnsweredYesNo = false
+        let existsHistory = []
+
+        const generateBtn = document.getElementById("p2-sum-generateBtn")
+        const yesBtn = document.getElementById("p2-sum-yesBtn")
+        const noBtn = document.getElementById("p2-sum-noBtn")
+        const feedback = document.getElementById("p2-sum-feedback")
+        const questionSection = document.getElementById("p2-sum-question-section")
+
+        function violatesConsecutiveRule(candidateExists) {
+          if (candidateExists) return false
+          const lastTwo = existsHistory.slice(-2)
+          return lastTwo.filter(e => e === false).length + 1 > 1
+        }
+
+        window.p2SumGenerateMatrices = function () {
+          let exists, attempts = 0
+          do {
+            rowsA = randomInt(3, 4); colsA = randomInt(3, 4)
+            rowsB = randomInt(3, 4); colsB = randomInt(3, 4)
+            exists = rowsA === rowsB && colsA === colsB
+            attempts++
+          } while (violatesConsecutiveRule(exists) && attempts < 1000)
+
+          existsHistory.push(exists)
+          if (existsHistory.length > 2) existsHistory.shift()
+
+          matrixA = buildRandomMatrix(rowsA, colsA)
+          matrixB = buildRandomMatrix(rowsB, colsB)
+          sumExists = exists
+          sumResult = sumExists ? matrixA.map((row, i) => row.map((a, j) => a + matrixB[i][j])) : null
+
+          document.getElementById("p2-sum-matrix-display").innerHTML = `
+            <div class="matrix-container">
+              <div class="matrix-label">Matrix A (${rowsA}&times;${colsA})</div>
+              ${renderMatrixTable(matrixA)}
+            </div>
+            <div class="matrix-container">
+              <div class="matrix-label">Matrix B (${rowsB}&times;${colsB})</div>
+              ${renderMatrixTable(matrixB)}
+            </div>`
+
+          feedback.textContent = ""; feedback.className = ""
+          document.getElementById("p2-sum-result-display").innerHTML = ""
+          document.getElementById("p2-sum-calculation-steps").innerHTML = ""
+          generateBtn.classList.add("hidden")
+          yesBtn.disabled = false; noBtn.disabled = false
+          questionSection.classList.remove("hidden")
+          quizAnsweredYesNo = false
+          document.getElementById("p2-sum-quiz-section").classList.add("hidden")
+          document.getElementById("p2-sum-quiz-feedback").innerHTML = ""
+          document.getElementById("p2-sum-quiz-hint").classList.add("hidden")
+        }
+
+        window.p2SumAnswerQuestion = function (userSaysExists) {
+          const correct = userSaysExists === sumExists
+          yesBtn.disabled = true; noBtn.disabled = true
+          quizAnsweredYesNo = true
+          if (!correct) nScore -= nYes
+
+          if (sumExists) {
+            feedback.textContent = correct
+              ? "Correct! A and B have the same dimensions, so the sum exists."
+              : `Not quite. A and B are both ${rowsA}\u00d7${colsA}, so the sum does exist.`
+          } else {
+            feedback.textContent = correct
+              ? "Correct! A and B have different dimensions, so the sum does not exist."
+              : `Not quite. A is ${rowsA}\u00d7${colsA} and B is ${rowsB}\u00d7${colsB}, so the sum does not exist.`
+          }
+          feedback.className = correct ? "correct" : "incorrect"
+
+          if (sumExists) {
+            sumShowQuizSection(sumResult, rowsA, colsA)
+          } else {
+            sumUpdateScoreDisplay()
+            if (nScore < nProblems) generateBtn.classList.remove("hidden")
+          }
+        }
+
+        function sumShowQuizSection(correctMatrix, rows, cols) {
+          const prompt = document.getElementById("p2-sum-quiz-prompt")
+          prompt.textContent = "Enter your answer for A + B:"
+          let html = '<table class="quiz-matrix-input"><tbody>'
+          for (let i = 0; i < rows; i++) {
+            html += "<tr>"
+            for (let j = 0; j < cols; j++) {
+              html += `<td><input type="text" id="p2-sum-quiz-input-${i}-${j}" placeholder="?"></td>`
+            }
+            html += "</tr>"
+          }
+          html += "</tbody></table>"
+          document.getElementById("p2-sum-quiz-inputs").innerHTML = html
+          document.getElementById("p2-sum-quiz-feedback").innerHTML = ""
+          document.getElementById("p2-sum-quiz-hint").classList.add("hidden")
+          document.getElementById("p2-sum-quiz-section").classList.remove("hidden")
+          document.getElementById("p2-sum-quizCheckBtn").disabled = false
+        }
+
+        window.p2SumCheckQuiz = function () {
+          const correctMatrix = sumResult
+          const quizFeedback = document.getElementById("p2-sum-quiz-feedback")
+          const quizHint = document.getElementById("p2-sum-quiz-hint")
+          let allCorrect = true, wrongEntries = []
+
+          for (let i = 0; i < rowsA; i++) {
+            for (let j = 0; j < colsA; j++) {
+              const input = document.getElementById(`p2-sum-quiz-input-${i}-${j}`)
+              const userVal = parseFloat(input.value)
+              const correctVal = correctMatrix[i][j]
+              if (userVal === correctVal) {
+                input.classList.remove("incorrect"); input.classList.add("correct")
+              } else {
+                input.classList.remove("correct"); input.classList.add("incorrect")
+                allCorrect = false
+                wrongEntries.push({ row: i + 1, col: j + 1, your: isNaN(userVal) ? "(empty)" : userVal, correct: correctVal })
+              }
+            }
+          }
+
+          if (allCorrect) {
+            quizFeedback.textContent = "All correct! Your answer is right."
+            quizFeedback.className = "correct"; quizHint.classList.add("hidden")
+            nScore += nAns
+          } else {
+            quizFeedback.textContent = "Some entries are incorrect."
+            quizFeedback.className = "incorrect"; nScore = Math.max(0, nScore - nAns)
+            let hintHtml = "<strong>Errors found:</strong><br>"
+            wrongEntries.forEach(e => { hintHtml += `Row ${e.row}, Col ${e.col}: your answer = ${e.your}, correct = ${e.correct}<br>` })
+            hintHtml += "<br><strong>Step-by-step hint:</strong><br>"
+            for (let i = 0; i < rowsA; i++) {
+              for (let j = 0; j < colsA; j++) {
+                hintHtml += `Row ${i + 1}, Col ${j + 1}: ${formatInput(matrixA[i][j])} + ${formatInput(matrixB[i][j])} = ${correctMatrix[i][j]}<br>`
+              }
+            }
+            quizHint.innerHTML = hintHtml; quizHint.classList.remove("hidden")
+          }
+
+          document.getElementById("p2-sum-quizCheckBtn").disabled = true
+          sumUpdateScoreDisplay()
+          if (allCorrect && nScore < nProblems) {
+            setTimeout(() => { p2SumGenerateMatrices() }, 1500)
+          } else if (nScore < nProblems) {
+            generateBtn.classList.remove("hidden")
+          }
+        }
+
+        function sumUpdateScoreDisplay() {
+          document.getElementById("p2-sum-score-display").textContent = `Score: ${nScore.toFixed(1)}`
+          tabScores.sum = nScore; updateTotalScore()
+        }
+
+        p2SumGenerateMatrices()
+      })();
+
+      // ═══════════════════════════════════════════
+      //  MATRIX SUBTRACTION  (2 problems, 2 pts each = max 4)
+      // ═══════════════════════════════════════════
+      (function () {
+        let matrixA, matrixB
+        let rowsA, colsA, rowsB, colsB
+        let differenceExists = false, differenceResult = null
+        var nScore = 0, nProblems = 4, nYes = 0.5, nAns = 2
+        var quizAnsweredYesNo = false
+        let existsHistory = []
+
+        const generateBtn = document.getElementById("p2-diff-generateBtn")
+        const yesBtn = document.getElementById("p2-diff-yesBtn")
+        const noBtn = document.getElementById("p2-diff-noBtn")
+        const feedback = document.getElementById("p2-diff-feedback")
+        const questionSection = document.getElementById("p2-diff-question-section")
+
+        function violatesConsecutiveRule(candidateExists) {
+          if (candidateExists) return false
+          const lastTwo = existsHistory.slice(-2)
+          return lastTwo.filter(e => e === false).length + 1 > 1
+        }
+
+        window.p2DiffGenerateMatrices = function () {
+          let exists, attempts = 0
+          do {
+            rowsA = randomInt(3, 4); colsA = randomInt(3, 4)
+            rowsB = randomInt(3, 4); colsB = randomInt(3, 4)
+            exists = rowsA === rowsB && colsA === colsB
+            attempts++
+          } while (violatesConsecutiveRule(exists) && attempts < 1000)
+
+          existsHistory.push(exists)
+          if (existsHistory.length > 2) existsHistory.shift()
+
+          matrixA = buildRandomMatrix(rowsA, colsA)
+          matrixB = buildRandomMatrix(rowsB, colsB)
+          differenceExists = exists
+          differenceResult = differenceExists ? matrixA.map((row, i) => row.map((a, j) => a - matrixB[i][j])) : null
+
+          document.getElementById("p2-diff-matrix-display").innerHTML = `
+            <div class="matrix-container">
+              <div class="matrix-label">Matrix A (${rowsA}&times;${colsA})</div>
+              ${renderMatrixTable(matrixA)}
+            </div>
+            <div class="matrix-container">
+              <div class="matrix-label">Matrix B (${rowsB}&times;${colsB})</div>
+              ${renderMatrixTable(matrixB)}
+            </div>`
+
+          feedback.textContent = ""; feedback.className = ""
+          document.getElementById("p2-diff-result-display").innerHTML = ""
+          document.getElementById("p2-diff-calculation-steps").innerHTML = ""
+          generateBtn.classList.add("hidden")
+          yesBtn.disabled = false; noBtn.disabled = false
+          questionSection.classList.remove("hidden")
+          quizAnsweredYesNo = false
+          document.getElementById("p2-diff-quiz-section").classList.add("hidden")
+          document.getElementById("p2-diff-quiz-feedback").innerHTML = ""
+          document.getElementById("p2-diff-quiz-hint").classList.add("hidden")
+        }
+
+        window.p2DiffAnswerQuestion = function (userSaysExists) {
+          const correct = userSaysExists === differenceExists
+          yesBtn.disabled = true; noBtn.disabled = true
+          quizAnsweredYesNo = true
+          if (!correct) nScore -= nYes
+
+          if (differenceExists) {
+            feedback.textContent = correct
+              ? "Correct! A and B have the same dimensions, so the difference exists."
+              : `Not quite. A and B are both ${rowsA}\u00d7${colsA}, so the difference does exist.`
+          } else {
+            feedback.textContent = correct
+              ? "Correct! A and B have different dimensions, so the difference does not exist."
+              : `Not quite. A is ${rowsA}\u00d7${colsA} and B is ${rowsB}\u00d7${colsB}, so the difference does not exist.`
+          }
+          feedback.className = correct ? "correct" : "incorrect"
+
+          if (differenceExists) {
+            diffShowQuizSection(differenceResult, rowsA, colsA)
+          } else {
+            diffUpdateScoreDisplay()
+            if (nScore < nProblems) generateBtn.classList.remove("hidden")
+          }
+        }
+
+        function diffShowQuizSection(correctMatrix, rows, cols) {
+          const prompt = document.getElementById("p2-diff-quiz-prompt")
+          prompt.textContent = "Enter your answer for A - B:"
+          let html = '<table class="quiz-matrix-input"><tbody>'
+          for (let i = 0; i < rows; i++) {
+            html += "<tr>"
+            for (let j = 0; j < cols; j++) {
+              html += `<td><input type="text" id="p2-diff-quiz-input-${i}-${j}" placeholder="?"></td>`
+            }
+            html += "</tr>"
+          }
+          html += "</tbody></table>"
+          document.getElementById("p2-diff-quiz-inputs").innerHTML = html
+          document.getElementById("p2-diff-quiz-feedback").innerHTML = ""
+          document.getElementById("p2-diff-quiz-hint").classList.add("hidden")
+          document.getElementById("p2-diff-quiz-section").classList.remove("hidden")
+          document.getElementById("p2-diff-quizCheckBtn").disabled = false
+        }
+
+        window.p2DiffCheckQuiz = function () {
+          const correctMatrix = differenceResult
+          const quizFeedback = document.getElementById("p2-diff-quiz-feedback")
+          const quizHint = document.getElementById("p2-diff-quiz-hint")
+          let allCorrect = true, wrongEntries = []
+
+          for (let i = 0; i < rowsA; i++) {
+            for (let j = 0; j < colsA; j++) {
+              const input = document.getElementById(`p2-diff-quiz-input-${i}-${j}`)
+              const userVal = parseFloat(input.value)
+              const correctVal = correctMatrix[i][j]
+              if (userVal === correctVal) {
+                input.classList.remove("incorrect"); input.classList.add("correct")
+              } else {
+                input.classList.remove("correct"); input.classList.add("incorrect")
+                allCorrect = false
+                wrongEntries.push({ row: i + 1, col: j + 1, your: isNaN(userVal) ? "(empty)" : userVal, correct: correctVal })
+              }
+            }
+          }
+
+          if (allCorrect) {
+            quizFeedback.textContent = "All correct! Your answer is right."
+            quizFeedback.className = "correct"; quizHint.classList.add("hidden")
+            nScore += nAns
+          } else {
+            quizFeedback.textContent = "Some entries are incorrect."
+            quizFeedback.className = "incorrect"; nScore = Math.max(0, nScore - nAns)
+            let hintHtml = "<strong>Errors found:</strong><br>"
+            wrongEntries.forEach(e => { hintHtml += `Row ${e.row}, Col ${e.col}: your answer = ${e.your}, correct = ${e.correct}<br>` })
+            hintHtml += "<br><strong>Step-by-step hint:</strong><br>"
+            for (let i = 0; i < rowsA; i++) {
+              for (let j = 0; j < colsA; j++) {
+                hintHtml += `Row ${i + 1}, Col ${j + 1}: ${formatInput(matrixA[i][j])} - ${formatInput(matrixB[i][j])} = ${correctMatrix[i][j]}<br>`
+              }
+            }
+            quizHint.innerHTML = hintHtml; quizHint.classList.remove("hidden")
+          }
+
+          document.getElementById("p2-diff-quizCheckBtn").disabled = true
+          diffUpdateScoreDisplay()
+          if (allCorrect && nScore < nProblems) {
+            setTimeout(() => { p2DiffGenerateMatrices() }, 1500)
+          } else if (nScore < nProblems) {
+            generateBtn.classList.remove("hidden")
+          }
+        }
+
+        function diffUpdateScoreDisplay() {
+          document.getElementById("p2-diff-score-display").textContent = `Score: ${nScore.toFixed(1)}`
+          tabScores.diff = nScore; updateTotalScore()
+        }
+
+        p2DiffGenerateMatrices()
+      })();
+
+      // ═══════════════════════════════════════════
+      //  MATRIX PRODUCT  (2 problems, 2 pts each = max 4)
+      // ═══════════════════════════════════════════
+      (function () {
+        let matrixA, matrixB
+        let rowsA, colsA, rowsB, colsB
+        let productExists = false, productResult = null
+        var nScore = 0, nProblems = 4, nYes = 0.5, nAns = 2
+        var quizAnsweredYesNo = false
+        let existsHistory = []
+
+        const generateBtn = document.getElementById("p2-prod-generateBtn")
+        const yesBtn = document.getElementById("p2-prod-yesBtn")
+        const noBtn = document.getElementById("p2-prod-noBtn")
+        const feedback = document.getElementById("p2-prod-feedback")
+        const questionSection = document.getElementById("p2-prod-question-section")
+
+        function violatesConsecutiveRule(candidateExists) {
+          if (candidateExists) return false
+          const lastTwo = existsHistory.slice(-2)
+          return lastTwo.filter(e => e === false).length + 1 > 1
+        }
+
+        window.p2ProdGenerateMatrices = function () {
+          let exists, attempts = 0
+          do {
+            rowsA = randomInt(3, 4); colsA = randomInt(3, 4)
+            rowsB = randomInt(3, 4); colsB = randomInt(3, 4)
+            exists = colsA === rowsB
+            attempts++
+          } while (violatesConsecutiveRule(exists) && attempts < 1000)
+
+          existsHistory.push(exists)
+          if (existsHistory.length > 2) existsHistory.shift()
+
+          matrixA = buildRandomMatrix(rowsA, colsA)
+          matrixB = buildRandomMatrix(rowsB, colsB)
+          productExists = exists
+
+          if (productExists) {
+            productResult = Array.from({ length: rowsA }, (_, i) =>
+              Array.from({ length: colsB }, (_, j) => matrixA[i].reduce((sum, aVal, k) => sum + aVal * matrixB[k][j], 0))
+            )
+          } else {
+            productResult = null
+          }
+
+          document.getElementById("p2-prod-matrix-display").innerHTML = `
+            <div class="matrix-container">
+              <div class="matrix-label">Matrix A (${rowsA}&times;${colsA})</div>
+              ${renderMatrixTable(matrixA)}
+            </div>
+            <div class="matrix-container">
+              <div class="matrix-label">Matrix B (${rowsB}&times;${colsB})</div>
+              ${renderMatrixTable(matrixB)}
+            </div>`
+
+          feedback.textContent = ""; feedback.className = ""
+          document.getElementById("p2-prod-result-display").innerHTML = ""
+          document.getElementById("p2-prod-calculation-steps").innerHTML = ""
+          generateBtn.classList.add("hidden")
+          yesBtn.disabled = false; noBtn.disabled = false
+          questionSection.classList.remove("hidden")
+          quizAnsweredYesNo = false
+          document.getElementById("p2-prod-quiz-section").classList.add("hidden")
+          document.getElementById("p2-prod-quiz-feedback").innerHTML = ""
+          document.getElementById("p2-prod-quiz-hint").classList.add("hidden")
+        }
+
+        window.p2ProdAnswerQuestion = function (userSaysExists) {
+          const correct = userSaysExists === productExists
+          yesBtn.disabled = true; noBtn.disabled = true
+          quizAnsweredYesNo = true
+          if (!correct) nScore -= nYes
+
+          if (productExists) {
+            feedback.textContent = correct
+              ? "Correct! The number of columns of A equals the number of rows of B, so the product exists."
+              : `Not quite. A has ${colsA} columns and B has ${rowsB} rows, which match, so the product does exist.`
+          } else {
+            feedback.textContent = correct
+              ? "Correct! The number of columns of A does not equal the number of rows of B, so the product does not exist."
+              : `Not quite. A has ${colsA} columns but B has ${rowsB} rows, so the product does not exist.`
+          }
+          feedback.className = correct ? "correct" : "incorrect"
+
+          if (productExists) {
+            prodShowQuizSection(productResult, rowsA, colsB)
+          } else {
+            prodUpdateScoreDisplay()
+            if (nScore < nProblems) generateBtn.classList.remove("hidden")
+          }
+        }
+
+        function prodShowQuizSection(correctMatrix, rows, cols) {
+          const prompt = document.getElementById("p2-prod-quiz-prompt")
+          prompt.textContent = "Enter your answer for A\u00d7B:"
+          let html = '<table class="quiz-matrix-input"><tbody>'
+          for (let i = 0; i < rows; i++) {
+            html += "<tr>"
+            for (let j = 0; j < cols; j++) {
+              html += `<td><input type="text" id="p2-prod-quiz-input-${i}-${j}" placeholder="?"></td>`
+            }
+            html += "</tr>"
+          }
+          html += "</tbody></table>"
+          document.getElementById("p2-prod-quiz-inputs").innerHTML = html
+          document.getElementById("p2-prod-quiz-feedback").innerHTML = ""
+          document.getElementById("p2-prod-quiz-hint").classList.add("hidden")
+          document.getElementById("p2-prod-quiz-section").classList.remove("hidden")
+          document.getElementById("p2-prod-quizCheckBtn").disabled = false
+        }
+
+        window.p2ProdCheckQuiz = function () {
+          const correctMatrix = productResult
+          const quizFeedback = document.getElementById("p2-prod-quiz-feedback")
+          const quizHint = document.getElementById("p2-prod-quiz-hint")
+          let allCorrect = true, wrongEntries = []
+
+          for (let i = 0; i < rowsA; i++) {
+            for (let j = 0; j < colsB; j++) {
+              const input = document.getElementById(`p2-prod-quiz-input-${i}-${j}`)
+              const userVal = parseFloat(input.value)
+              const correctVal = correctMatrix[i][j]
+              if (userVal === correctVal) {
+                input.classList.remove("incorrect"); input.classList.add("correct")
+              } else {
+                input.classList.remove("correct"); input.classList.add("incorrect")
+                allCorrect = false
+                wrongEntries.push({ row: i + 1, col: j + 1, your: isNaN(userVal) ? "(empty)" : userVal, correct: correctVal })
+              }
+            }
+          }
+
+          if (allCorrect) {
+            quizFeedback.textContent = "All correct! Your answer is right."
+            quizFeedback.className = "correct"; quizHint.classList.add("hidden")
+            nScore += nAns
+          } else {
+            quizFeedback.textContent = "Some entries are incorrect."
+            quizFeedback.className = "incorrect"; nScore = Math.max(0, nScore - nAns)
+            let hintHtml = "<strong>Errors found:</strong><br>"
+            wrongEntries.forEach(e => { hintHtml += `Row ${e.row}, Col ${e.col}: your answer = ${e.your}, correct = ${e.correct}<br>` })
+            hintHtml += "<br><strong>Step-by-step hint:</strong><br>"
+            for (let i = 0; i < rowsA; i++) {
+              for (let j = 0; j < colsB; j++) {
+                const terms = matrixA[i].map((aVal, idx) => `(${formatInput(aVal)})(${formatInput(matrixB[idx][j])})`)
+                hintHtml += `Row ${i + 1}, Col ${j + 1}: ${terms.join(" + ")} = ${correctMatrix[i][j]}<br>`
+              }
+            }
+            quizHint.innerHTML = hintHtml; quizHint.classList.remove("hidden")
+          }
+
+          document.getElementById("p2-prod-quizCheckBtn").disabled = true
+          prodUpdateScoreDisplay()
+          if (allCorrect && nScore < nProblems) {
+            setTimeout(() => { p2ProdGenerateMatrices() }, 1500)
+          } else if (nScore < nProblems) {
+            generateBtn.classList.remove("hidden")
+          }
+        }
+
+        function prodUpdateScoreDisplay() {
+          document.getElementById("p2-prod-score-display").textContent = `Score: ${nScore.toFixed(1)}`
+          tabScores.prod = nScore; updateTotalScore()
+        }
+
+        p2ProdGenerateMatrices()
+      })();
+
+      // ═══════════════════════════════════════════
+      //  MATRIX TRANSPOSE  (2 problems, 2 pts each = max 4)
+      // ═══════════════════════════════════════════
+      (function () {
+        let matrixA
+        let rowsA, colsA
+        let transposeResult = null
+        var nScore = 0, nProblems = 4, nAns = 2
+
+        window.p2TransGenerateMatrix = function () {
+          rowsA = randomInt(3, 4); colsA = randomInt(3, 4)
+          matrixA = buildRandomMatrix(rowsA, colsA)
+          transposeResult = Array.from({ length: colsA }, (_, j) => Array.from({ length: rowsA }, (_, i) => matrixA[i][j]))
+
+          document.getElementById("p2-trans-matrix-display").innerHTML = `
+            <div class="matrix-container">
+              <div class="matrix-label">Matrix A (${rowsA}&times;${colsA})</div>
+              ${renderMatrixTable(matrixA)}
+            </div>`
+
+          document.getElementById("p2-trans-result-display").innerHTML = ""
+          document.getElementById("p2-trans-calculation-steps").innerHTML = ""
+          document.getElementById("p2-trans-quiz-section").classList.add("hidden")
+          document.getElementById("p2-trans-quiz-feedback").innerHTML = ""
+          document.getElementById("p2-trans-quiz-hint").classList.add("hidden")
+
+          transShowQuizSection(transposeResult, colsA, rowsA)
+        }
+
+        function transShowQuizSection(correctMatrix, rows, cols) {
+          const prompt = document.getElementById("p2-trans-quiz-prompt")
+          prompt.textContent = "Enter your answer for A^T:"
+          let html = '<table class="quiz-matrix-input"><tbody>'
+          for (let i = 0; i < rows; i++) {
+            html += "<tr>"
+            for (let j = 0; j < cols; j++) {
+              html += `<td><input type="text" id="p2-trans-quiz-input-${i}-${j}" placeholder="?"></td>`
+            }
+            html += "</tr>"
+          }
+          html += "</tbody></table>"
+          document.getElementById("p2-trans-quiz-inputs").innerHTML = html
+          document.getElementById("p2-trans-quiz-feedback").innerHTML = ""
+          document.getElementById("p2-trans-quiz-hint").classList.add("hidden")
+          document.getElementById("p2-trans-quiz-section").classList.remove("hidden")
+          document.getElementById("p2-trans-quizCheckBtn").disabled = false
+        }
+
+        window.p2TransCheckQuiz = function () {
+          const correctMatrix = transposeResult
+          const quizFeedback = document.getElementById("p2-trans-quiz-feedback")
+          const quizHint = document.getElementById("p2-trans-quiz-hint")
+          let allCorrect = true, wrongEntries = []
+
+          for (let i = 0; i < colsA; i++) {
+            for (let j = 0; j < rowsA; j++) {
+              const input = document.getElementById(`p2-trans-quiz-input-${i}-${j}`)
+              const userVal = parseFloat(input.value)
+              const correctVal = correctMatrix[i][j]
+              if (userVal === correctVal) {
+                input.classList.remove("incorrect"); input.classList.add("correct")
+              } else {
+                input.classList.remove("correct"); input.classList.add("incorrect")
+                allCorrect = false
+                wrongEntries.push({ row: i + 1, col: j + 1, your: isNaN(userVal) ? "(empty)" : userVal, correct: correctVal })
+              }
+            }
+          }
+
+          if (allCorrect) {
+            quizFeedback.textContent = "All correct! Your answer is right."
+            quizFeedback.className = "correct"; quizHint.classList.add("hidden")
+            nScore += nAns
+          } else {
+            quizFeedback.textContent = "Some entries are incorrect."
+            quizFeedback.className = "incorrect"; nScore = Math.max(0, nScore - nAns)
+            let hintHtml = "<strong>Errors found:</strong><br>"
+            wrongEntries.forEach(e => { hintHtml += `Row ${e.row}, Col ${e.col}: your answer = ${e.your}, correct = ${e.correct}<br>` })
+            hintHtml += "<br><strong>Step-by-step hint:</strong><br>"
+            for (let i = 0; i < rowsA; i++) {
+              for (let j = 0; j < colsA; j++) {
+                hintHtml += `A[${i + 1}][${j + 1}] = ${matrixA[i][j]} \u2192 A^T[${j + 1}][${i + 1}] = ${matrixA[i][j]}<br>`
+              }
+            }
+            quizHint.innerHTML = hintHtml; quizHint.classList.remove("hidden")
+          }
+
+          document.getElementById("p2-trans-quizCheckBtn").disabled = true
+          document.getElementById("p2-trans-score-display").textContent = `Score: ${nScore.toFixed(1)}`
+          tabScores.trans = nScore; updateTotalScore()
+
+          if (allCorrect && nScore < nProblems) {
+            setTimeout(() => { p2TransGenerateMatrix() }, 1500)
+          }
+        }
+
+        p2TransGenerateMatrix()
+      })();
+
+      // ═══════════════════════════════════════════
+      //  SCALAR MULTIPLICATION  (2 problems, 2 pts each = max 4)
+      // ═══════════════════════════════════════════
+      (function () {
+        let matrixA, scalarK
+        let rowsA, colsA
+        let productResult = null
+        var nScore = 0, nProblems = 4, nAns = 2
+
+        window.p2ScalarGenerateMatrix = function () {
+          rowsA = randomInt(3, 4); colsA = randomInt(3, 4)
+          matrixA = buildRandomMatrix(rowsA, colsA)
+          do { scalarK = randomInt(-5, 5) } while (scalarK === 0)
+          productResult = matrixA.map(row => row.map(a => scalarK * a))
+
+          document.getElementById("p2-scalar-matrix-display").innerHTML = `
+            <div class="matrix-container">
+              <div class="matrix-label">Matrix A (${rowsA}&times;${colsA})</div>
+              ${renderMatrixTable(matrixA)}
+            </div>
+            <p class="p2-scalar-label">Scalar k = ${scalarK}</p>`
+
+          document.getElementById("p2-scalar-result-display").innerHTML = ""
+          document.getElementById("p2-scalar-calculation-steps").innerHTML = ""
+          document.getElementById("p2-scalar-quiz-section").classList.add("hidden")
+          document.getElementById("p2-scalar-quiz-feedback").innerHTML = ""
+          document.getElementById("p2-scalar-quiz-hint").classList.add("hidden")
+
+          scalarShowQuizSection(productResult, rowsA, colsA)
+        }
+
+        function scalarShowQuizSection(correctMatrix, rows, cols) {
+          const prompt = document.getElementById("p2-scalar-quiz-prompt")
+          prompt.textContent = "Enter your answer for kA:"
+          let html = '<table class="quiz-matrix-input"><tbody>'
+          for (let i = 0; i < rows; i++) {
+            html += "<tr>"
+            for (let j = 0; j < cols; j++) {
+              html += `<td><input type="text" id="p2-scalar-quiz-input-${i}-${j}" placeholder="?"></td>`
+            }
+            html += "</tr>"
+          }
+          html += "</tbody></table>"
+          document.getElementById("p2-scalar-quiz-inputs").innerHTML = html
+          document.getElementById("p2-scalar-quiz-feedback").innerHTML = ""
+          document.getElementById("p2-scalar-quiz-hint").classList.add("hidden")
+          document.getElementById("p2-scalar-quiz-section").classList.remove("hidden")
+          document.getElementById("p2-scalar-quizCheckBtn").disabled = false
+        }
+
+        window.p2ScalarCheckQuiz = function () {
+          const correctMatrix = productResult
+          const quizFeedback = document.getElementById("p2-scalar-quiz-feedback")
+          const quizHint = document.getElementById("p2-scalar-quiz-hint")
+          let allCorrect = true, wrongEntries = []
+
+          for (let i = 0; i < rowsA; i++) {
+            for (let j = 0; j < colsA; j++) {
+              const input = document.getElementById(`p2-scalar-quiz-input-${i}-${j}`)
+              const userVal = parseFloat(input.value)
+              const correctVal = correctMatrix[i][j]
+              if (userVal === correctVal) {
+                input.classList.remove("incorrect"); input.classList.add("correct")
+              } else {
+                input.classList.remove("correct"); input.classList.add("incorrect")
+                allCorrect = false
+                wrongEntries.push({ row: i + 1, col: j + 1, your: isNaN(userVal) ? "(empty)" : userVal, correct: correctVal })
+              }
+            }
+          }
+
+          if (allCorrect) {
+            quizFeedback.textContent = "All correct! Your answer is right."
+            quizFeedback.className = "correct"; quizHint.classList.add("hidden")
+            nScore += nAns
+          } else {
+            quizFeedback.textContent = "Some entries are incorrect."
+            quizFeedback.className = "incorrect"; nScore = Math.max(0, nScore - nAns)
+            let hintHtml = "<strong>Errors found:</strong><br>"
+            wrongEntries.forEach(e => { hintHtml += `Row ${e.row}, Col ${e.col}: your answer = ${e.your}, correct = ${e.correct}<br>` })
+            hintHtml += "<br><strong>Step-by-step hint:</strong><br>"
+            for (let i = 0; i < rowsA; i++) {
+              for (let j = 0; j < colsA; j++) {
+                hintHtml += `Row ${i + 1}, Col ${j + 1}: (${scalarK}) * ${formatInput(matrixA[i][j])} = ${correctMatrix[i][j]}<br>`
+              }
+            }
+            quizHint.innerHTML = hintHtml; quizHint.classList.remove("hidden")
+          }
+
+          document.getElementById("p2-scalar-quizCheckBtn").disabled = true
+          document.getElementById("p2-scalar-score-display").textContent = `Score: ${nScore.toFixed(1)}`
+          tabScores.scalar = nScore; updateTotalScore()
+
+          if (allCorrect && nScore < nProblems) {
+            setTimeout(() => { p2ScalarGenerateMatrix() }, 1500)
+          }
+        }
+
+        p2ScalarGenerateMatrix()
+      })();
+    
+      })();
+    </script>
+  </body>
+</html>
