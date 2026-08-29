@@ -1047,7 +1047,7 @@
     <div class="p1-tab-content" id="p1-tab-scalar">
       <p class="subtitle">A is a vector and k is a scalar. Enter your solution for kA.</p>
       <div class="interactive-demo">
-        <button onclick="p1ScalarGenerateVectors()">Generate New Vector</button>
+        <button id="p1-scalar-generateBtn" onclick="p1ScalarGenerateVectors()" disabled>Generate New Vector</button>
         <div id="p1-scalar-vector-display" class="vector-display"></div>
         <div id="p1-scalar-quiz-section" class="quiz-section hidden">
           <p class="quiz-label" id="p1-scalar-quiz-prompt"></p>
@@ -3134,8 +3134,12 @@
       (function () {
         let vectorA, scalarK, productResult = null
         var nScore = 0, nProblems = 3, nAns = 1
+        let capReached = false
+        const generateBtn = document.getElementById("p1-scalar-generateBtn")
 
         window.p1ScalarGenerateVectors = function () {
+          if (capReached) { generateBtn.disabled = true; return }
+          generateBtn.disabled = true
           const size = randomInt(3, 5)
           vectorA = Array.from({ length: size }, () => randomInt(-10, 10))
           do { scalarK = randomInt(-5, 5) } while (scalarK === 0)
@@ -3208,6 +3212,13 @@
           document.getElementById("p1-scalar-quizCheckBtn").disabled = true
           document.getElementById("p1-scalar-score-display").textContent = `Score: ${nScore.toFixed(1)}`
           tabScores.scalar = nScore; updateTotalScore()
+
+          if (nScore >= nProblems) {
+            capReached = true
+            generateBtn.disabled = true
+          } else {
+            generateBtn.disabled = false
+          }
 
           if (allCorrect && nScore < nProblems) {
             setTimeout(() => { p1ScalarGenerateVectors() }, 1500)
@@ -3819,7 +3830,7 @@
           const correct = userSaysExists === productExists
           yesBtn.disabled = true; noBtn.disabled = true
           quizAnsweredYesNo = true
-          if (!correct) nScore -= nYes
+          if (!correct) nScore = Math.max(0, nScore - nYes)
 
           if (productExists) {
             feedback.textContent = correct
@@ -3883,7 +3894,7 @@
           if (allCorrect) {
             quizFeedback.textContent = "All correct! Your answer is right."
             quizFeedback.className = "correct"; quizHint.classList.add("hidden")
-            nScore += nAns
+            nScore = Math.min(nProblems, nScore + nAns)
           } else {
             quizFeedback.textContent = "Some entries are incorrect."
             quizFeedback.className = "incorrect"; nScore = Math.max(0, nScore - nAns)
